@@ -1,5 +1,3 @@
 export default function Movies() {
-  return (
-    <p>Hei</p>
-  );
+  return <p>Hei</p>;
 }
