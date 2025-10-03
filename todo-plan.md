@@ -17,7 +17,7 @@ Should the lists be route based i.e /movies /movies/completed /movies/plan-to-wa
 3. Top or side panel to jump between the lists.
 4. Like myanimelist app: Bottom tabs navigation between lists, then top scrollable tab for watch states.
 
-4 is best, works great on myanimelist app. 3 is maybe easier
+4 is best, for mobile. Could be ok for desktop too. works great on myanimelist app. 3 is maybe easier
 
 ### List view
 Filter by watch state:
