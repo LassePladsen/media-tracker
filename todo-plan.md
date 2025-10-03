@@ -15,7 +15,9 @@ Should the lists be route based i.e /movies /movies/completed /movies/plan-to-wa
 1. Rectangles of lists/media types like google keep. Either they can work side by side / above&below without needing to open a list, or clicking one opens a full view of that list.
 2. Simple name/image link to the actual list, better for mobile. Top&bottom mobile, side by side web?
 3. Top or side panel to jump between the lists.
-Probably 3. With nested entires for watch states.
+4. Like myanimelist app: Bottom tabs navigation between lists, then top scrollable tab for watch states.
+
+4 is best, works great on myanimelist app. 3 is maybe easier
 
 ### List view
 Filter by watch state:
