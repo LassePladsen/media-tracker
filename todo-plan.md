@@ -53,7 +53,8 @@ Core:
     - [] Date of last rewatch finish
 - [] Links to imdb (movies,shows) / mal (anime)
 - [] user+password system. Should be secure, hash passord system.
-- [] Lag en readme for installering og evt demofunksjonalitet på min site så de slipper åpne egen website. Må da ha demofunksjonalitet
+- [] Create a readme for installation and possibly demo functionality on my site so they don't have to open their own website. Must then have demo functionality
+- [] Extract current hardcoded list labels (movies,tv shows, anime) to the actual data (db or dummy)
 
 
 Wishlist of potential extra features:
