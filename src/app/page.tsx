@@ -1,10 +1,12 @@
 // import { useState } from "react";
-import { FaFilm, FaSearch, FaTv } from "react-icons/fa";
-
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { SiMyanimelist } from "react-icons/si";
 import { ComponentProps, PropsWithChildren } from "react";
+import { FaSearch } from "react-icons/fa";
+
+import AnimeIcon from "@/components/ui/anime-icon";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import MovieIcon from "@/components/ui/movie-icon";
+import TvIcon from "@/components/ui/tv-icon";
 
 function MediaTypeButton({
   onClick,
@@ -62,21 +64,22 @@ export default function Home() {
             <MediaTypeButton
             // onClick={() => onNavigate("movies")}
             >
-              <FaFilm />
-              <span>Movies</span>
+              <MovieIcon />
+              <span>Movies</span>{" "}
+              {/* TODO: get list names from db / dummy text. column called title/label */}
             </MediaTypeButton>
 
             <MediaTypeButton
             // onClick={() => onNavigate("movies")}
             >
-              <FaTv />
+              <TvIcon />
               <span>TV Shows</span>
             </MediaTypeButton>
 
             <MediaTypeButton
             // onClick={() => onNavigate("anime")}
             >
-              <SiMyanimelist />
+              <AnimeIcon />
               <span>Anime</span>
             </MediaTypeButton>
           </div>

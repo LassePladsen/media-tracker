@@ -1,6 +1,6 @@
 import { MediaList } from "../types/media";
 
-export const mockData: MediaList = {
+export const dummyData: MediaList = {
   movies: [
     {
       id: "m1",
