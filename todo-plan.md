@@ -26,14 +26,10 @@ Core:
     - [] Easy one-click toggle between plan to watch / have watched from preview and in detailed view
     - [] Upon adding to list, default to plan to watch with 0 episodes watched
     - [] Upon marking as completed: ask for rating?
-    
 - [] Watch list (entries in plan to watch)
     - [] Separate for each list / media type
     - [] Able to reorder the watch lists so as to prioritize what to watch first etc.
 - [] Rating system of watched entries with 1 decimal point, [0.0,10.0] (potentially just steps of 0.5 instead of 0.1)
-- [] Date log system:
-    - [] Date of started watching
-    - [] Date of finished watching
 - [] Rewatch system. Reset the episode count and up the rewatch counter
 - [] Easy toggle system for where it can be streamed/watched. e.g. "Netflix", "Local Plex", and whatever other services you have. Use icons for these instead of names.
 - [] Fuzzy search for entries globally between all lists for max ease of use, at home page.
@@ -46,6 +42,15 @@ Core:
     - [] Currently airing
     - [] Finished airing
 - [] My links (github, linkedin) in footer of home page or somewhere else.
+- [] Entry metadata / details:
+    - [] Categories. Perhaps separate db for this so it supports many.
+    - [] Year of release.
+    - [] Date of started watching
+    - [] Date of finished watching
+    - [] Number of times rewatched
+    - [] Date of last rewatch finish
+- [] Links to imdb (movies,shows) / mal (anime)
+
 
 Wishlist of potential extra features:
 - [] details like images, release dates, episode count, categories, etc. from API's like imdb (movies+tv) and myanimelist (anime) if possible. Alternatively just a link to imdb / mal if found, needs api too.
@@ -55,6 +60,8 @@ Wishlist of potential extra features:
 - [] one list that composes tv + anime?
 - [] Feature to reorder the entries that have the same ratings, to decide what you like the most e.g between three 9.0 ratings.
 - [] Share list with read-only url. 
+- [] White / dark mode?
+- [] Color style. E.g default nextjs neat black/white vs the figma dock purple-based theme.
 
 ## Database structure
 - [] Table: list / (media) Type.

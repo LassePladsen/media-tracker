@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Media tracker",
-  description: "Track & rate what you watch, plan your future watch list",
+  description:
+    "Keep track of all your favorite movies, shows, and anime in one place",
 };
 
 export default function RootLayout({
