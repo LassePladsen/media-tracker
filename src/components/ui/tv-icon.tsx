@@ -1,5 +1,5 @@
-import { FaTv } from "react-icons/fa";
+import { PiTelevisionSimpleBold } from "react-icons/pi";
 
 export default function TvIcon() {
-  return <FaTv />;
+  return <PiTelevisionSimpleBold />;
 }

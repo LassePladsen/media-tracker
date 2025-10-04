@@ -1,5 +1,5 @@
-import { BiMoviePlay } from "react-icons/bi";
+import { TbMovie } from "react-icons/tb";
 
 export default function MovieIcon() {
-  return <BiMoviePlay />;
+  return <TbMovie />;
 }
