@@ -1,11 +1,10 @@
-import HomePage from "@/components/HomePage";
-import Footer from "@/components/Footer";
-
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <HomePage />
-      <Footer />
-    </div>
+    <>
+      <div className="my-auto">
+        <h1 className="text-4xl">Media tracker</h1>
+      </div>
+      <a href="/movies">movies</a>
+    </>
   );
 }
