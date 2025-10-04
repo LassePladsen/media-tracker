@@ -55,6 +55,7 @@ Core:
 - [] user+password system. Should be secure, hash passord system.
 - [] Create a readme for installation and possibly demo functionality on my site so they don't have to open their own website. Must then have demo functionality
 - [] Extract current hardcoded list labels (movies,tv shows, anime) to the actual data (db or dummy)
+- [] Right now the routes seem to be much slower than before i moved them into (lists). Im guessing its not prefetching correctly anymore. Look into that
 
 
 Wishlist of potential extra features:
