@@ -1,4 +1,4 @@
-export type MediaType = "movies" | "shows" | "anime";
+export type MediaType = "movies" | "tv-shows" | "anime";
 
 export type WatchStatus =
   | "all"

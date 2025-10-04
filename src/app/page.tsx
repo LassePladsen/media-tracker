@@ -1,4 +1,5 @@
 // import { useState } from "react";
+import Link from "next/link";
 import { ComponentProps, PropsWithChildren } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -9,17 +10,19 @@ import MovieIcon from "@/components/ui/movie-icon";
 import TvIcon from "@/components/ui/tv-icon";
 
 function MediaTypeButton({
+  href,
   onClick,
   children,
-}: PropsWithChildren<{ onClick?: ComponentProps<typeof Button>["onClick"] }>) {
+}: PropsWithChildren<{
+  href: ComponentProps<typeof Link>["href"];
+  onClick?: ComponentProps<typeof Button>["onClick"];
+}>) {
   return (
-    <Button
-      onClick={onClick}
-      variant="outline"
-      className="h-20 flex flex-col gap-2"
-    >
-      {children}
-    </Button>
+    <Link href={href} className="flex flex-col gap-2">
+      <Button onClick={onClick} variant="outline" className="h-20">
+        {children}
+      </Button>
+    </Link>
   );
 }
 
@@ -61,24 +64,18 @@ export default function Home() {
           </form>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <MediaTypeButton
-            // onClick={() => onNavigate("movies")}
-            >
+            <MediaTypeButton href="/movies">
               <MovieIcon />
-              <span>Movies</span>{" "}
+              <span>Movies</span>
               {/* TODO: get list names from db / dummy text. column called title/label */}
             </MediaTypeButton>
 
-            <MediaTypeButton
-            // onClick={() => onNavigate("movies")}
-            >
+            <MediaTypeButton href="/tv-shows">
               <TvIcon />
               <span>TV Shows</span>
             </MediaTypeButton>
 
-            <MediaTypeButton
-            // onClick={() => onNavigate("anime")}
-            >
+            <MediaTypeButton href="/anime">
               <AnimeIcon />
               <span>Anime</span>
             </MediaTypeButton>
