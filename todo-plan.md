@@ -4,9 +4,10 @@ The plan
 Mostly inspired by myanimelist, since imdb list and other apps are either not good enough and global between media types. myanimelist has the best list system I know.
 
 - Fullstack react app using next.js
-- Permanent storage: ? (backup plan is sqlite. Will definitely be good enough since I'm the only user)
+- Hostes i vercel.
+- Permanent storage: vercel postgres. F.eks Neon or supabase. (alternative Azure). https://vercel.com/docs/postgres
 - User+password system to protect your data?
-- Data backup system: ? (if using sqlite, safe in git. Its nonsensitive data anyways. - Bad system, cause will need to continually git commit it)
+- Data backup system: ? 
 - Using eslint, prettier, both with pre-commit (staged files) git hook
 - Using shadcn ui component library
 
@@ -50,6 +51,7 @@ Core:
     - [] Number of times rewatched
     - [] Date of last rewatch finish
 - [] Links to imdb (movies,shows) / mal (anime)
+- [] user+password system. Should be secure, hash passord system.
 
 
 Wishlist of potential extra features:
@@ -62,7 +64,9 @@ Wishlist of potential extra features:
 - [] Share list with read-only url. 
 - [] White / dark mode?
 - [] Color style. E.g default nextjs neat black/white vs the figma dock purple-based theme.
+- [] Demo showcase on the github project, for example either using dummy data hardcoded for demo or using a demo user in db (this wont work well because any demo tester could mess up the data for next person. Solution is to create a new demo user for each tester. I dont like this approach cause it will need automatic cleanup logic).
 
 ## Database structure
 - [] Table: list / (media) Type.
 - [] (media) Entry /  Item. Columns: enum state.
+- [] user
