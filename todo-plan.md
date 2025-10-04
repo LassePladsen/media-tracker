@@ -12,43 +12,7 @@ Mostly inspired by myanimelist, since imdb list and other apps are either not go
 
 
 ## UI
-Should the lists be route based i.e /movies /movies/completed /movies/plan-to-watch? Alternative is state-based on same route.
-
-#### Prompt for UI to ai agents:
-Its a web applicaton Media Tracker. You have three lists: movies, shows, anime. Each list has media entries with watch states and other details which are not important as of now.
-
-This needs to have good ux for both desktop and mobile units. 
-Home page you get a search bar for searching entries globally, and then a button link to the three lists. In the footer there is a link to the project on github, and at the end it says "made by Lasse Pladsen" with image links to my github and my linkedIn
-
-In each list page there should be an easy switching between the three lists with buttons always shown.
-Also easy switching between watch states (all,plan to watch, completed,on hold, dropped) with one click for each and always shown. Also a search bar for this current list. Also a filter feature to filter other details.
-
-No other page than home page and each list view.
-
-### Home 
-1. Rectangles of lists/media types like google keep. Either they can work side by side / above&below without needing to open a list, or clicking one opens a full view of that list.
-2. Simple name/image link to the actual list, better for mobile. Top&bottom mobile, side by side web?
-3. Top or side panel to jump between the lists.
-5. Global search bar for fuzzy search in all lists. Below is the list links
-
-4 is best, for mobile. Could be ok for desktop too. works great on myanimelist app. 3 is maybe easier
-
-### List view
-Desktop:
-1. A side panel for navigation between lists and a search at the top 
-
-Mobile:
-1. Like myanimelist app: Bottom tabs navigation between lists, then top scrollable tab for watch states.
-
-View for filtering by watch state:
-1. Dropdown filter, for states and others. -
-2. Buttons at the top for the states like myanimelist has. See ux-design/ image watch-state-filters.png
-3. Nested entries in a side panel
-I think 
-
-
-## Pages
-Home page
+Figma link: https://www.figma.com/make/3KEShIoAfIvGeL5tRS2zWN/Media-Tracker-App?node-id=0-4&t=UECCAUkRw4amd6Tg-1
 
 ## Features
 Core:
