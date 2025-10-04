@@ -3,6 +3,7 @@ export type MediaType = "movies" | "shows" | "anime";
 export type WatchStatus =
   | "all"
   | "plan-to-watch"
+  | "watching"
   | "completed"
   | "on-hold"
   | "dropped";
