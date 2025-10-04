@@ -17,7 +17,7 @@ Figma link: https://www.figma.com/make/3KEShIoAfIvGeL5tRS2zWN/Media-Tracker-App?
 
 ## Features
 Core:
-- [] Media list OR just a media type system in the db. Default movie/tv/anime.
+- [] Media list OR just a media type system in the db. Default movie/tv/anime. Can support custom lists later.
 - [] Watch states
     - [] Plan to watch (watchlist)
     - [] Watching
@@ -53,11 +53,12 @@ Core:
     - [] Date of last rewatch finish
 - [] Links to imdb (movies,shows) / mal (anime)
 - [] user+password system. Should be secure, hash passord system.
+- [] Lag en readme for installering og evt demofunksjonalitet på min site så de slipper åpne egen website. Må da ha demofunksjonalitet
 
 
 Wishlist of potential extra features:
 - [] details like images, release dates, episode count, categories, etc. from API's like imdb (movies+tv) and myanimelist (anime) if possible. Alternatively just a link to imdb / mal if found, needs api too.
-- [] Custom lists, e.g. "tv + anime" in one
+- [] Custom lists, e.g. "tv + anime" in one. Im thinking a sort of 'parentType' metadata to use for what icon to show etc.
 - [] Nested lists, e.g. "Movies -> war movies / comedies"
 - [] Global watch list between all lists - Maybe drop this?
 - [] one list that composes tv + anime?

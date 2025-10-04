@@ -37,7 +37,7 @@ export default function Home() {
           <div className="text-center space-y-4">
             <h1 className="text-4xl md:text-5xl">Media Tracker</h1>
             <p className="text-muted-foreground">
-              Keep track of all your favorite movies, shows, and anime in one
+              Keep track of all your favorite movies, TV shows, and anime in one
               place
             </p>
           </div>
