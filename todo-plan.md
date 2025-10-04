@@ -44,7 +44,8 @@ Core:
     - [] Finished airing
 - [] My links (github, linkedin) in footer of home page or somewhere else.
 - [] Entry metadata / details:
-    - [] Categories. Perhaps separate db for this so it supports many.
+    - [] Genre. Support multiple? Could have normalized db, separate table linking to media entry
+    - [] Categories. Support multiple? 
     - [] Year of release.
     - [] Date of started watching
     - [] Date of finished watching
