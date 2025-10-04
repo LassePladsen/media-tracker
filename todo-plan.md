@@ -6,6 +6,8 @@ Mostly inspired by myanimelist, since imdb list and other apps are either not go
 - Permanent storage: ? (backup plan is sqlite. Will definitely be good enough since I'm the only user)
 - User+password system to protect your data?
 - Data backup system: ? (if using sqlite, safe in git. Its nonsensitive data anyways. - Bad system, cause will need to continually git commit it)
+- Using eslint, prettier, both with pre-commit (staged files) git hook
+- Using shadcn ui component library
 
 
 ## UI
@@ -15,16 +17,24 @@ Should the lists be route based i.e /movies /movies/completed /movies/plan-to-wa
 1. Rectangles of lists/media types like google keep. Either they can work side by side / above&below without needing to open a list, or clicking one opens a full view of that list.
 2. Simple name/image link to the actual list, better for mobile. Top&bottom mobile, side by side web?
 3. Top or side panel to jump between the lists.
-4. Like myanimelist app: Bottom tabs navigation between lists, then top scrollable tab for watch states.
+5. Global search bar for fuzzy search in all lists. Below is the list links
 
 4 is best, for mobile. Could be ok for desktop too. works great on myanimelist app. 3 is maybe easier
 
 ### List view
-Filter by watch state:
-1. Dropdown filter, for states and others
-2. Tab menu for states like myanimelist has
-3. Nested entries in the side panel
-Probably 2, but needs a solution for mobile. 
+Desktop:
+1. A side panel for navigation between lists and a search at the top 
+
+Mobile:
+1. Like myanimelist app: Bottom tabs navigation between lists, then top scrollable tab for watch states.
+
+View for filtering by watch state:
+1. Dropdown filter, for states and others. -
+2. Buttons at the top for the states like myanimelist has. See ux-design/ image watch-state-filters.png
+3. Nested entries in a side panel
+I think 
+
+
 
 
 ## Features
@@ -42,13 +52,21 @@ Core:
     
 - [] Watch list (entries in plan to watch)
     - [] Separate for each list / media type
-    - [] one for combined tv (live action series) + anime under the media type "series" or just call it "TV+anime" for simplicity
     - [] Able to reorder the watch lists so as to prioritize what to watch first etc.
-- [] Rating system of watched entries with 1 decimal point, [0.0,10.0]
+- [] Rating system of watched entries with 1 decimal point, [0.0,10.0] (potentially just steps of 0.5 instead of 0.1)
 - [] Date log system:
     - [] Date of started watching
     - [] Date of finished watching
 - [] Rewatch system. Reset the episode count and up the rewatch counter
+- [] Easy toggle system for where it can be streamed/watched. e.g. "Netflix", "Local Plex", and whatever other services you have. Use icons for these instead of names.
+- [] Fuzzy search for entries globally between all lists for max ease of use
+- [] Profile/settings tab.
+    - [] Change password
+- [] Export all data. E.g to JSON
+- [] Release/airing state
+    - [] Not yet aired / Upcoming
+    - [] Currently airing
+    - [] Finished airing
 
 Wishlist of potential extra features:
 - [] details like images, release dates, episode count, categories, etc. from API's like imdb (movies+tv) and myanimelist (anime) if possible. Alternatively just a link to imdb / mal if found, needs api too.
@@ -56,6 +74,10 @@ Wishlist of potential extra features:
 - [] Nested lists, e.g. "Movies -> war movies / comedies"
 - [] Global watch list between all lists - Maybe drop this?
 - [] one list that composes tv + anime?
+- [] Feature to reorder the entries that have the same ratings, to decide what you like the most e.g between three 9.0 ratings.
+- [] Search for entries in specific lists too? Not really a good use case if you can already search globally
+- [] Share list with read-only url. 
 
 ## Database structure
-
+- [] Table: list / (media) Type.
+- [] (media) Entry /  Item. Columns: enum state.
