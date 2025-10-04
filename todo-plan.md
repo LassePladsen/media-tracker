@@ -1,4 +1,5 @@
-===== The plan =====
+The plan
+========
 
 Mostly inspired by myanimelist, since imdb list and other apps are either not good enough and global between media types. myanimelist has the best list system I know.
 
