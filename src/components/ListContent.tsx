@@ -1,6 +1,10 @@
-/* eslint-disable */ // TODO: DELETE this
-export default function ListContent({ data }: any) {
-  const label = data.label;
-  const type = data.type;
-  return <p>Hei liste</p>;
+import { MediaData } from "@/types/media";
+
+/* eslint-disable */ // TODO: DELETE line
+export default function ListContent({ data }: { data: MediaData }) {
+  return (
+    <div className="my-4">
+      <p>{data.label}</p>
+    </div>
+  );
 }

@@ -88,7 +88,7 @@ export const dummyData: MediaList = {
   },
   tv: {
     type: "tv-shows",
-    label: "Tv shows",
+    label: "TV Shows",
     data: [
       {
         id: "s1",

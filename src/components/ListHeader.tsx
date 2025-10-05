@@ -37,7 +37,7 @@ function HeaderButton({
 export default function ListHeader() {
   const data = dummyData;
   return (
-    <ButtonGroup className="sticky top-0 flex-wrap">
+    <ButtonGroup className="sticky top-3 flex-wrap">
       <HeaderButton href="/">
         <IoHomeOutline className={HEADER_ICON_SIZE} />
       </HeaderButton>
