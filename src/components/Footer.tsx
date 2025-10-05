@@ -12,7 +12,7 @@ export default function Footer() {
             className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
           >
             <FaGithub className="w-5 h-5" />
-            <span>View Project on GitHub</span>
+            <span>Open project on GitHub</span>
           </a>
 
           <div className="flex items-center gap-3">

@@ -1,11 +1,26 @@
 "use client";
-import { Plus } from "lucide-react";
+import { Plus, Search, SlidersHorizontal } from "lucide-react";
 import { use, useMemo, useState } from "react";
 import { notFound } from "next/navigation";
 
 import { dummyData } from "@/data/dummyData";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { type } from "os";
+import { title } from "process";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import EntryCard from "@/components/ui/entry-card";
+
+const watchStatuses: { value: WatchStatus | "all"; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'plan-to-watch', label: 'Plan to Watch' },
+  { value: 'watching', label: 'Watching' },
+  { value: 'completed', label: 'Completed' },
+  { value: 'on-hold', label: 'On Hold' },
+  { value: 'dropped', label: 'Dropped' },
+  { value: 'rewatching', label: 'Rewatching' },
+];
 
 export default function ListPage({
   params,
@@ -95,6 +110,104 @@ export default function ListPage({
           Add Entry
         </Button>
       </div>
+
+       {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder={`Search ${title.toLowerCase()}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+
+          {/* Status filters - always visible */}
+          <div className="flex gap-2 overflow-x-auto pb-2 -mb-2">
+            {watchStatuses.map((status) => (
+              <Button
+                key={status.value}
+                variant={selectedStatus === status.value ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedStatus(status.value)}
+                className="whitespace-nowrap"
+              >
+                {status.label}
+              </Button>
+            ))}
+          </div>
+
+          {/* Additional filters */}
+          <div className="flex gap-2 items-center flex-wrap">
+            <SlidersHorizontal className="w-4 h-4 text-muted-foreground" />
+            <Select value={selectedGenre} onValueChange={setSelectedGenre}>
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="Genre" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Genres</SelectItem>
+              {/* TODO: */}
+                {/*genres.map(genre => (
+                  <SelectItem key={genre} value={genre}>{genre}</SelectItem>
+                ))*/}
+              </SelectContent>
+            </Select>
+
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Year" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Years</SelectItem>
+              {/* TODO: */}
+                {/*years.map(year => (
+                  <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                ))*/}
+              </SelectContent>
+            </Select>
+
+            {(selectedGenre !== 'all' || selectedYear !== 'all') && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setSelectedGenre('all');
+                  setSelectedYear('all');
+                }}
+              >
+                Clear Filters
+              </Button>
+            )}
+          </div>
+
+      {/* Entries grid */}
+      <div className="flex-1 container mx-auto px-4 py-6">
+        {filteredEntries.length === 0 ? (
+          <div className="text-center py-12 text-muted-foreground">
+            <p>No entries found</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredEntries.map(entry => (
+              <EntryCard 
+                key={entry.id} 
+                // entry={entry}
+                // onClick={() => handleOpenEditDialog(entry)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* TODO: <MediaEntryDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onSave={handleSaveEntry}
+        entry={editingEntry}
+        mediaType={type}
+      />
+      */}
     </div>
   );
 }
