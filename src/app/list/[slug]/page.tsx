@@ -11,7 +11,6 @@ export default async function ListPage({
 }) {
   const { slug } = await params;
   const list: MediaList | undefined = dummyData[slug];
-  console.log("LP", slug, list);
   if (!list) notFound();
   return (
     <div className="my-4">

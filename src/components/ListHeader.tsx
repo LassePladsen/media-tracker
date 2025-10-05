@@ -39,6 +39,7 @@ export default function ListHeader() {
         {Object.entries(lists).map(([slug, list], index) => (
           <HeaderButton href={slug} key={index}>
             <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
+            {list.label}
           </HeaderButton>
         ))}
       </ButtonGroup>
