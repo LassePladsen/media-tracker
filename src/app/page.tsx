@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ComponentProps, PropsWithChildren } from "react";
 import { FaSearch } from "react-icons/fa";
 
-import AnimeIcon from "@/components/ui/anime-icon";
+import AnimeIcon from "@/components/ui/icon-anime";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import MovieIcon from "@/components/ui/movie-icon";
-import TvIcon from "@/components/ui/tv-icon";
+import MovieIcon from "@/components/ui/icon-movie";
+import TvIcon from "@/components/ui/icon-tv";
 
-function MediaTypeButton({
+function ListButton({
   href,
   onClick,
   children,
@@ -64,21 +64,21 @@ export default function Home() {
           </form>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <MediaTypeButton href="/movies">
+            <ListButton href="/movies">
               <MovieIcon />
               <span>Movies</span>
               {/* TODO: get list names from db / dummy text. column called title/label */}
-            </MediaTypeButton>
+            </ListButton>
 
-            <MediaTypeButton href="/tv-shows">
+            <ListButton href="/tv-shows">
               <TvIcon />
               <span>TV Shows</span>
-            </MediaTypeButton>
+            </ListButton>
 
-            <MediaTypeButton href="/anime">
+            <ListButton href="/anime">
               <AnimeIcon />
               <span>Anime</span>
-            </MediaTypeButton>
+            </ListButton>
           </div>
         </div>
       </div>
