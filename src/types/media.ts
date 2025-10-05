@@ -18,8 +18,14 @@ export interface MediaEntry {
   imageUrl?: string;
 }
 
+export interface MediaData {
+  type: MediaType;
+  label: string;
+  data: MediaEntry[];
+}
+
 export interface MediaList {
-  movies: MediaEntry[];
-  shows: MediaEntry[];
-  anime: MediaEntry[];
+  movies: MediaData;
+  tv: MediaData;
+  anime: MediaData;
 }

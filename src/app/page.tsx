@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MovieIcon from "@/components/ui/icon-movie";
 import TvIcon from "@/components/ui/icon-tv";
+import { dummyData } from "@/data/dummyData";
 
 function ListButton({
   href,
@@ -27,6 +28,7 @@ function ListButton({
 }
 
 export default function Home() {
+  const data = dummyData;
   // const [searchQuery, setSearchQuery] = useState("");
 
   // const handleSearch = (e: React.FormEvent) => {
@@ -66,18 +68,17 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <ListButton href="/movies">
               <MovieIcon />
-              <span>Movies</span>
-              {/* TODO: get list names from db / dummy text. column called title/label */}
+              <span>{data.movies.label}</span>
             </ListButton>
 
             <ListButton href="/tv-shows">
               <TvIcon />
-              <span>TV Shows</span>
+              <span>{data.tv.label}</span>
             </ListButton>
 
             <ListButton href="/anime">
               <AnimeIcon />
-              <span>Anime</span>
+              <span>{data.anime.label}</span>
             </ListButton>
           </div>
         </div>

@@ -10,6 +10,7 @@ import { ButtonGroup } from "./ui/button-group";
 import IconAnime from "./ui/icon-anime";
 import IconMovie from "./ui/icon-movie";
 import IconTv from "./ui/icon-tv";
+import { dummyData } from "@/data/dummyData";
 
 const HEADER_ICON_SIZE = "w-4 h-4";
 
@@ -34,6 +35,7 @@ function HeaderButton({
 }
 
 export default function ListHeader() {
+  const data = dummyData;
   return (
     <ButtonGroup className="sticky top-0 flex-wrap">
       <HeaderButton href="/">
@@ -41,17 +43,17 @@ export default function ListHeader() {
       </HeaderButton>
       <HeaderButton href="/movies">
         <IconMovie className={HEADER_ICON_SIZE} />
-        Movies
+        {data.movies.label}
       </HeaderButton>
 
       <ButtonGroup>
         <HeaderButton href="/tv-shows">
           <IconTv className={HEADER_ICON_SIZE} />
-          TV shows
+          {data.tv.label}
         </HeaderButton>
         <HeaderButton href="/anime">
           <IconAnime className={HEADER_ICON_SIZE} />
-          Anime
+          {data.anime.label}
         </HeaderButton>
       </ButtonGroup>
     </ButtonGroup>
