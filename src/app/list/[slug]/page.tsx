@@ -3,18 +3,18 @@ import { Plus, Search, SlidersHorizontal } from "lucide-react";
 import { notFound } from "next/navigation";
 import { use, useMemo, useState } from "react";
 
-import EntryCard from "@/components/EntryCard";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import EntryCard from "@/components/entry-card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
-import { dummyData } from "@/data/dummyData";
-import { watchStatuses } from "@/data/watchStatus";
+} from "@/components/ui/select";
+import { dummyData } from "@/data/dummy-data";
+import { watchStatuses } from "@/data/watch-status";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { title } from "process";
 

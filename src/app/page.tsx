@@ -3,10 +3,10 @@ import Link from "next/link";
 import { ComponentProps, PropsWithChildren } from "react";
 import { FaSearch } from "react-icons/fa";
 
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { MediaIcon } from "@/components/ui/MediaIcon";
-import { dummyData } from "@/data/dummyData";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { MediaIcon } from "@/components/ui/media-icon";
+import { dummyData } from "@/data/dummy-data";
 
 function ListButton({
   href,
