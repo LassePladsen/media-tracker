@@ -38,6 +38,7 @@ Core:
 - [] Profile/settings tab.
     - [] Change password
 - [] Export all data. E.g to JSON
+- [] import data. E.g to JSON. TODO: check how MAL exports as its my biggest list
 - [] Release/airing state
     - [] Not yet aired / Upcoming
     - [] Currently airing
