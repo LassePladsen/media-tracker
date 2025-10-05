@@ -6,7 +6,7 @@ export default function ListLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col font-sans">
+    <div className="flex flex-col mx-25">
       <ListHeader />
       {children}
     </div>

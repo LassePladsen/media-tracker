@@ -7,7 +7,7 @@ import { IoHomeOutline } from "react-icons/io5";
 
 import { dummyData } from "@/data/dummyData";
 import { Button } from "./ui/button";
-import { ButtonGroup } from "./ui/button-group";
+import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import { MediaIcon } from "./ui/media-icon";
 
 const HEADER_ICON_SIZE = "w-4 h-4";
@@ -35,6 +35,7 @@ export default function ListHeader() {
       <HeaderButton href="/">
         <IoHomeOutline className={HEADER_ICON_SIZE} />
       </HeaderButton>
+      <ButtonGroupSeparator />
       <ButtonGroup>
         {Object.entries(lists).map(([slug, list], index) => (
           <HeaderButton href={slug} key={index}>
