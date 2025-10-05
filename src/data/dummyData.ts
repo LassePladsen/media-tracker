@@ -1,10 +1,12 @@
-import { MediaList } from "../types/media";
+import { MediaData } from "../types/media";
 
-export const dummyData: MediaList = {
+export const dummyData: MediaData = {
   movies: {
+    id: 0,
+    slug: "movies",
     type: "movies",
     label: "Movies",
-    data: [
+    entries: [
       {
         id: "m1",
         title: "Inception",
@@ -87,9 +89,11 @@ export const dummyData: MediaList = {
     ],
   },
   tv: {
-    type: "tv-shows",
+    id: 1,
+    slug: "tv",
+    type: "tv",
     label: "TV Shows",
-    data: [
+    entries: [
       {
         id: "s1",
         title: "Breaking Bad",
@@ -171,9 +175,11 @@ export const dummyData: MediaList = {
     ],
   },
   anime: {
+    id: 2,
+    slug: "anime",
     type: "anime",
     label: "Anime",
-    data: [
+    entries: [
       {
         id: "a1",
         title: "Death Note",

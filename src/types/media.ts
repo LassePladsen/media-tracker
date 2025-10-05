@@ -1,13 +1,13 @@
-export type MediaType = "movies" | "tv-shows" | "anime";
+export type MediaType = "movies" | "tv" | "anime";
 
-export type WatchStatus = // The state of not started or added as entry would just be undefined / null. LP 2025-10-05
-
-    | "plan-to-watch"
-    | "watching"
-    | "completed"
-    | "on-hold"
-    | "dropped"
-    | "rewatching";
+// The state of not started or added as entry would just be undefined / null. LP 2025-10-05
+export type WatchStatus =
+  | "plan-to-watch"
+  | "watching"
+  | "completed"
+  | "on-hold"
+  | "dropped"
+  | "rewatching";
 
 export interface MediaEntry {
   id: string;
@@ -19,14 +19,12 @@ export interface MediaEntry {
   imageUrl?: string;
 }
 
-export interface MediaData {
+export interface MediaList {
+  id: number;
+  slug: string;
   type: MediaType;
   label: string;
-  data: MediaEntry[];
+  entries: MediaEntry[];
 }
 
-export interface MediaList {
-  movies: MediaData;
-  tv: MediaData;
-  anime: MediaData;
-}
+export type MediaData = Record<string, MediaList>;

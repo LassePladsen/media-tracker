@@ -3,11 +3,9 @@ import Link from "next/link";
 import { ComponentProps, PropsWithChildren } from "react";
 import { FaSearch } from "react-icons/fa";
 
-import AnimeIcon from "@/components/ui/icon-anime";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import MovieIcon from "@/components/ui/icon-movie";
-import TvIcon from "@/components/ui/icon-tv";
+import { MediaIcon } from "@/components/ui/media-icon";
 import { dummyData } from "@/data/dummyData";
 
 function ListButton({
@@ -28,7 +26,7 @@ function ListButton({
 }
 
 export default function Home() {
-  const data = dummyData;
+  const lists = dummyData;
   // const [searchQuery, setSearchQuery] = useState("");
 
   // const handleSearch = (e: React.FormEvent) => {
@@ -66,20 +64,12 @@ export default function Home() {
           </form>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <ListButton href="/movies">
-              <MovieIcon />
-              <span>{data.movies.label}</span>
-            </ListButton>
-
-            <ListButton href="/tv-shows">
-              <TvIcon />
-              <span>{data.tv.label}</span>
-            </ListButton>
-
-            <ListButton href="/anime">
-              <AnimeIcon />
-              <span>{data.anime.label}</span>
-            </ListButton>
+            {Object.entries(lists).map(([slug, list], index) => (
+              <ListButton href={"/list/" + slug} key={index}>
+                <MediaIcon type={list.type} />
+                <span>{list.label}</span>
+              </ListButton>
+            ))}
           </div>
         </div>
       </div>
