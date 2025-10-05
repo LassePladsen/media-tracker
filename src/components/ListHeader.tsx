@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import { ComponentProps, PropsWithChildren } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 
@@ -18,7 +18,7 @@ function HeaderButton({
 }: PropsWithChildren<{
   href: ComponentProps<typeof Link>["href"];
 }>) {
-  const isActive = usePathname().endsWith(String(href));
+  const isActive = useParams<{ slug: string }>()["slug"] === String(href);
   return (
     <Link href={href}>
       <div className="flex flex-col gap-2">
