@@ -23,7 +23,7 @@ export interface MediaList {
   id: number;
   slug: string;
   type: MediaType;
-  label: string;
+  title: string;
   entries: MediaEntry[];
 }
 

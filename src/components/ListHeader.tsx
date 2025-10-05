@@ -18,7 +18,7 @@ function HeaderButton({
 }: PropsWithChildren<{
   href: ComponentProps<typeof Link>["href"];
 }>) {
-  const isActive = usePathname() === href;
+  const isActive = usePathname().endsWith(String(href));
   return (
     <Link href={href}>
       <div className="flex flex-col gap-2">
@@ -39,7 +39,7 @@ export default function ListHeader() {
         {Object.entries(lists).map(([slug, list], index) => (
           <HeaderButton href={slug} key={index}>
             <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
-            {list.label}
+            {list.title}
           </HeaderButton>
         ))}
       </ButtonGroup>

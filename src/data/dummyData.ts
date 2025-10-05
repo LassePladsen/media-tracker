@@ -5,7 +5,7 @@ export const dummyData: MediaData = {
     id: 0,
     slug: "movies",
     type: "movies",
-    label: "Movies",
+    title: "Movies",
     entries: [
       {
         id: "m1",
@@ -92,7 +92,7 @@ export const dummyData: MediaData = {
     id: 1,
     slug: "tv",
     type: "tv",
-    label: "TV Shows",
+    title: "TV Shows",
     entries: [
       {
         id: "s1",
@@ -178,7 +178,7 @@ export const dummyData: MediaData = {
     id: 2,
     slug: "anime",
     type: "anime",
-    label: "Anime",
+    title: "Anime",
     entries: [
       {
         id: "a1",

@@ -67,7 +67,7 @@ export default function Home() {
             {Object.entries(lists).map(([slug, list], index) => (
               <ListButton href={"/list/" + slug} key={index}>
                 <MediaIcon type={list.type} />
-                <span>{list.label}</span>
+                <span>{list.title}</span>
               </ListButton>
             ))}
           </div>
