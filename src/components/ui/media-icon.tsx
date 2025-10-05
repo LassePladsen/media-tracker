@@ -1,19 +1,18 @@
 import { MediaType } from "@/types/media";
+import { Clapperboard, Tv } from "lucide-react";
 import { IconBaseProps } from "react-icons";
-import { PiTelevisionSimpleBold } from "react-icons/pi";
 import { SiMyanimelist } from "react-icons/si";
-import { TbMovie } from "react-icons/tb";
 
 export function IconAnime(props: IconBaseProps) {
   return <SiMyanimelist {...props} />;
 }
 
 export function IconMovie(props: IconBaseProps) {
-  return <TbMovie {...props} />;
+  return <Clapperboard {...props} />;
 }
 
 export function IconTv(props: IconBaseProps) {
-  return <PiTelevisionSimpleBold {...props} />;
+  return <Tv {...props} />;
 }
 export function MediaIcon({
   type,

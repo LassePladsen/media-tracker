@@ -7,7 +7,7 @@ import { dummyData } from "@/data/dummyData";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { Button } from "@/components/ui/button";
 
-export default async function ListPage({
+export default function ListPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -80,13 +80,13 @@ export default async function ListPage({
   }, [list.entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
 
   return (
-    <div className="my-4 mx-auto">
+    <div className="mt-5">
       {/* Title, count, and add button */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between">
         <div>
           <h1>{list.title}</h1>
           <p className="text-muted-foreground text-sm">
-            {filteredEntries.length}
+            {filteredEntries.length + " "}
             {filteredEntries.length === 1 ? "entry" : "entries"}
           </p>
         </div>
