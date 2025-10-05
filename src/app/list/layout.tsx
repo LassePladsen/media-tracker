@@ -1,4 +1,4 @@
-import ListHeader from "@/components/list-header";
+import ListHeader from "@/components/ListHeader";
 
 export default function ListLayout({
   children,

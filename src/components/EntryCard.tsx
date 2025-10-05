@@ -1,9 +1,9 @@
-import { watchStatusColors, watchStatuses } from "@/data/watch-status";
+import { watchStatusColors, watchStatuses } from "@/data/watchStatus";
 import { WatchStatus } from "@/types/media";
 import { Star } from "lucide-react";
 import { MediaEntry } from "../types/media";
-import { Badge } from "./ui/badge";
-import { Card } from "./ui/card";
+import { Badge } from "./ui/Badge";
+import { Card } from "./ui/Card";
 
 export default function Entrycard({
   entry,
