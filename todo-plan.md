@@ -56,6 +56,7 @@ Core:
 - [] Create a readme for installation and possibly demo functionality on my site so they don't have to open their own website. Must then have demo functionality
 - [] Extract current hardcoded list labels (movies,tv shows, anime) to the actual data (db or dummy)
 - [] Right now the routes seem to be much slower than before i moved them into (lists). Im guessing its not prefetching correctly anymore. Look into that
+- [] Toggleable state for minimum view, i.e showing the cards as small as possible, since they take up a lot of screen room. Especially this for mobile (maybe default it if on mobile)
 
 
 Wishlist of potential extra features:
