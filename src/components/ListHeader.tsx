@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IoHomeOutline } from "react-icons/io5";
 import { ComponentProps, PropsWithChildren } from "react";
+import { IoHomeOutline } from "react-icons/io5";
 
-import { ButtonGroup } from "./ui/button-group";
 import { Button } from "./ui/button";
-import IconMovie from "./ui/icon-movie";
+import { ButtonGroup } from "./ui/button-group";
 import IconAnime from "./ui/icon-anime";
+import IconMovie from "./ui/icon-movie";
 import IconTv from "./ui/icon-tv";
+
+const HEADER_ICON_SIZE = "w-4 h-4";
 
 function HeaderButton({
   href,
@@ -32,24 +34,26 @@ function HeaderButton({
 }
 
 export default function ListHeader() {
-  const iconSize = "w-4 h-4";
   return (
     <ButtonGroup>
       <HeaderButton href="/">
-        <IoHomeOutline className={iconSize} />
+        <IoHomeOutline className={HEADER_ICON_SIZE} />
       </HeaderButton>
       <HeaderButton href="/movies">
-        <IconMovie className={iconSize} />
+        <IconMovie className={HEADER_ICON_SIZE} />
         Movies
       </HeaderButton>
-      <HeaderButton href="/tv-shows">
-        <IconTv className={iconSize} />
-        TV shows
-      </HeaderButton>
-      <HeaderButton href="/anime">
-        <IconAnime className={iconSize} />
-        Anime
-      </HeaderButton>
+
+      <ButtonGroup>
+        <HeaderButton href="/tv-shows">
+          <IconTv className={HEADER_ICON_SIZE} />
+          TV shows
+        </HeaderButton>
+        <HeaderButton href="/anime">
+          <IconAnime className={HEADER_ICON_SIZE} />
+          Anime
+        </HeaderButton>
+      </ButtonGroup>
     </ButtonGroup>
   );
 }
