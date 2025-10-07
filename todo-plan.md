@@ -33,6 +33,7 @@ Core:
 - [] Rating system of watched entries with 1 decimal point, [0.0,10.0] (potentially just steps of 0.5 instead of 0.1)
 - [] Rewatch system. Reset the episode count and up the rewatch counter
 - [] Easy toggle system for where it can be streamed/watched. e.g. "Netflix", "Local Plex", and whatever other services you have. Use icons for these instead of names.
+- [] Easily visible delete button, maybe in a corner.
 - [] Fuzzy search for entries globally between all lists for max ease of use, at home page.
 - [] Fuzzy Search for entries in specific list page.
 - [] Profile/settings tab.
@@ -59,7 +60,6 @@ Core:
 - [] Right now the routes seem to be much slower than before i moved them into (lists). Im guessing its not prefetching correctly anymore. Look into that. POSSIBLY this will be fixed on production build. Needs testing.
 - [] Toggleable state for minimum view, i.e showing the cards as small as possible, since they take up a lot of screen room. Especially this for mobile (maybe default it if on mobile)
 - [] Sorting options. Year, genre, rating, custom (drag & drop would be cool, but on wishlist)
-- [] 
 
 
 Wishlist of potential extra features:

@@ -1,9 +1,10 @@
 "use client";
-import { ArrowDown10, Plus, Search, SlidersHorizontal } from "lucide-react";
+import { ArrowDown10, Minimize2, Plus, Search, SlidersHorizontal } from "lucide-react";
 import { notFound } from "next/navigation";
 import { use, useMemo, useState } from "react";
 
 import EntryCard from "@/components/entry-card";
+import { EntryEditDialog } from "@/components/entry-edit-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -17,7 +18,6 @@ import {
 import { dummyData } from "@/data/dummy-data";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
-import { EntryEditDialog } from "@/components/entry-edit-dialog";
 
 type MediaEntryWithoutId = Omit<MediaEntry, "id">;
 
@@ -38,6 +38,7 @@ export default function ListPage({
   const [selectedYear, setSelectedYear] = useState<string>("all"); // TODO:
   const [isEntryEditOpen, setIsEntryEditOpen] = useState(false); // TODO:
   const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
+  const [isSmallCards, setIsSmallCards] = useState(false);
 
   // TODO: handlers. these are from ai example as of now. LP 2025-10-05
   const onUpdateEntry = (
@@ -144,7 +145,7 @@ export default function ListPage({
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      {/* TODO: Additional filters / sorting*/}
+      {/* TODO: Row for filter, sort, etc. */}
       <div className="flex gap-2 items-center flex-wrap">
         {/* TODO: Sort options. Either popup or toggle between sorts which changes the icon depending. */}
         <ArrowDown10 className={filterIconClasses} />
@@ -192,6 +193,9 @@ export default function ListPage({
             Clear Filters
           </Button>
         )}
+
+        {/* Toggle small / minimal mode for entry cards */}
+        <Minimize2 className={filterIconClasses + " cursor-pointer"} onClick={() => setIsSmallCards(!isSmallCards)}/>
       </div>
 
       {/* Entries grid */}
@@ -204,6 +208,7 @@ export default function ListPage({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredEntries.map((entry) => (
               <EntryCard
+                smallMode={isSmallCards}
                 key={entry.id}
                 entry={entry}
                 onClick={() => openEntryEdit(entry)}
