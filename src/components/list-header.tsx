@@ -14,17 +14,20 @@ const HEADER_ICON_SIZE = "w-4 h-4";
 
 function HeaderButton({
   href,
-  className,
   children,
 }: PropsWithChildren<{
   href: ComponentProps<typeof Link>["href"];
-  className?: string;
 }>) {
   const isActive = useParams<{ slug: string }>()["slug"] === String(href);
   return (
-    <Link href={href} className={className}>
+    <Link href={href} className="h-full">
       <div className="flex flex-col gap-2">
-        <Button variant={isActive ? "default" : "ghost"}>{children}</Button>
+        <Button
+          variant={isActive ? "default" : "ghost"}
+          className="flex flex-col header-md:flex-row h-full"
+        >
+          {children}
+        </Button>
       </div>
     </Link>
   );
@@ -42,9 +45,7 @@ export default function ListHeader() {
         {Object.entries(lists).map(([slug, list], index) => (
           <HeaderButton href={slug} key={index}>
             <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
-            <span className="hidden header-sm:block overflow-hidden">
-              {list.title}
-            </span>
+            <span className="hidden header-sm:block">{list.title}</span>
           </HeaderButton>
         ))}
       </ButtonGroup>
