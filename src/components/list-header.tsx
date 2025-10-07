@@ -9,7 +9,6 @@ import { dummyData } from "@/data/dummy-data";
 import { Button } from "./ui/button";
 import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import { MediaIcon } from "./ui/media-icon";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 const HEADER_ICON_SIZE = "w-4 h-4";
 
@@ -32,24 +31,21 @@ function HeaderButton({
 export default function ListHeader() {
   const lists = dummyData;
   return (
-    <ScrollArea className="pb-3">
-      <ButtonGroup className="items-center">
-        <HeaderButton href="/">
-          <Home className={HEADER_ICON_SIZE} />
-        </HeaderButton>
-        <ButtonGroupSeparator />
-        <ButtonGroup>
-          <div className="flex gap-2 overflow-x-auto pb-2 -mb-2">
-            {Object.entries(lists).map(([slug, list], index) => (
-              <HeaderButton href={slug} key={index}>
-                <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
-                {list.title}
-              </HeaderButton>
-            ))}
-          </div>
-        </ButtonGroup>
+    <ButtonGroup className="items-center">
+      <HeaderButton href="/">
+        <Home className={HEADER_ICON_SIZE} />
+      </HeaderButton>
+      <ButtonGroupSeparator />
+      <ButtonGroup>
+        <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 -mb-2">
+          {Object.entries(lists).map(([slug, list], index) => (
+            <HeaderButton href={slug} key={index}>
+              <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
+              {list.title}
+            </HeaderButton>
+          ))}
+        </div>
       </ButtonGroup>
-      <ScrollBar orientation="horizontal" />
-    </ScrollArea>
+    </ButtonGroup>
   );
 }
