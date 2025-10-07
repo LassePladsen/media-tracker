@@ -17,6 +17,7 @@ import { dummyData } from "@/data/dummy-data";
 import { watchStatuses } from "@/data/watch-status";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { title } from "process";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function ListPage({
   params,
@@ -120,7 +121,7 @@ export default function ListPage({
       </div>
 
       {/* Status filters - always visible */}
-      <div className="flex gap-2 overflow-x-auto pb-2 -mb-2">
+      <ScrollArea className="flex gap-2  pb-2 mb-2 whitespace-nowrap">
         {Object.entries(watchStatuses).map(([status, label]) => (
           <Button
             key={status}
@@ -132,7 +133,8 @@ export default function ListPage({
             {label}
           </Button>
         ))}
-      </div>
+        <ScrollBar forceMount={true} orientation="horizontal"/>
+      </ScrollArea>
 
       {/* Additional filters */}
       <div className="flex gap-2 items-center flex-wrap">
