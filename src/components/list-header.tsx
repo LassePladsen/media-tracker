@@ -30,9 +30,8 @@ function HeaderButton({
   );
 }
 
-export default function ListHeader() {4
+export default function ListHeader() {
   const lists = dummyData;
-  const num_lists = Object.keys(lists).length + 12;
   return (
     <ButtonGroup className="items-center w-full">
       <HeaderButton href="/">
@@ -41,9 +40,11 @@ export default function ListHeader() {4
       <ButtonGroupSeparator />
       <ButtonGroup className="flex gap-5 pb-2 -mb-2 w-full">
         {Object.entries(lists).map(([slug, list], index) => (
-          <HeaderButton href={slug} key={index} className="w-1/3">
+          <HeaderButton href={slug} key={index}>
             <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
-            <span className="hidden header-sm:block overflow-hidden">{list.title}</span>
+            <span className="hidden header-sm:block overflow-hidden">
+              {list.title}
+            </span>
           </HeaderButton>
         ))}
       </ButtonGroup>
