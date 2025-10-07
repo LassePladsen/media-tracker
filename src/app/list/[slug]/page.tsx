@@ -6,6 +6,7 @@ import { use, useMemo, useState } from "react";
 import EntryCard from "@/components/entry-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -16,8 +17,6 @@ import {
 import { dummyData } from "@/data/dummy-data";
 import { watchStatuses } from "@/data/watch-status";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
-import { title } from "process";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function ListPage({
   params,
@@ -92,7 +91,7 @@ export default function ListPage({
   }, [list.entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 flex flex-col gap-4">
       {/* Title, count, and add button */}
       <div className="flex items-center justify-between">
         <div>
@@ -113,7 +112,7 @@ export default function ListPage({
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
           type="text"
-          placeholder={`Search ${title.toLowerCase()}...`}
+          placeholder={`Search ${list.title.toLowerCase()}...`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-9"
@@ -121,7 +120,7 @@ export default function ListPage({
       </div>
 
       {/* Status filters - always visible */}
-      <ScrollArea className="flex gap-2  pb-2 mb-2 whitespace-nowrap">
+      <ScrollArea type="auto" className="pb-4 -mb-2 whitespace-nowrap">
         {Object.entries(watchStatuses).map(([status, label]) => (
           <Button
             key={status}
@@ -133,7 +132,7 @@ export default function ListPage({
             {label}
           </Button>
         ))}
-        <ScrollBar forceMount={true} orientation="horizontal"/>
+        <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
       {/* Additional filters */}
@@ -180,7 +179,7 @@ export default function ListPage({
       </div>
 
       {/* Entries grid */}
-      <div className="flex-1 container mx-auto px-4 py-6">
+      <div className="flex-1 container mx-auto px-4">
         {filteredEntries.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
             <p>No entries found</p>
