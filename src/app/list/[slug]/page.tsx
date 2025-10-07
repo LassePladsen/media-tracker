@@ -164,6 +164,7 @@ export default function ListPage({
           </SelectContent>
         </Select>
 
+        {/* TODO: also show this is general filter from popup is on */}
         {(selectedGenre !== "all" || selectedYear !== "all") && (
           <Button
             variant="ghost"
@@ -177,6 +178,9 @@ export default function ListPage({
           </Button>
         )}
       </div>
+
+      {/* Sort options */}
+
 
       {/* Entries grid */}
       <div className="flex-1 container mx-auto px-4">

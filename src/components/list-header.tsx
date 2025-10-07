@@ -14,13 +14,15 @@ const HEADER_ICON_SIZE = "w-4 h-4";
 
 function HeaderButton({
   href,
+  className,
   children,
 }: PropsWithChildren<{
   href: ComponentProps<typeof Link>["href"];
+  className?: string;
 }>) {
   const isActive = useParams<{ slug: string }>()["slug"] === String(href);
   return (
-    <Link href={href}>
+    <Link href={href} className={className}>
       <div className="flex flex-col gap-2">
         <Button variant={isActive ? "default" : "ghost"}>{children}</Button>
       </div>
@@ -30,21 +32,20 @@ function HeaderButton({
 
 export default function ListHeader() {
   const lists = dummyData;
+  const num_lists = Math.min(Object.keys(lists).length, 6);
   return (
-    <ButtonGroup className="items-center">
+    <ButtonGroup className="items-center w-full">
       <HeaderButton href="/">
         <Home className={HEADER_ICON_SIZE} />
       </HeaderButton>
       <ButtonGroupSeparator />
-      <ButtonGroup>
-        <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 -mb-2">
-          {Object.entries(lists).map(([slug, list], index) => (
-            <HeaderButton href={slug} key={index}>
-              <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
-              {list.title}
-            </HeaderButton>
-          ))}
-        </div>
+      <ButtonGroup className="flex gap-5 pb-2 -mb-2 w-full">
+        {Object.entries(lists).map(([slug, list], index) => (
+          <HeaderButton href={slug} key={index} className={`w-1/${num_lists}`}>
+            <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
+            <span className="hidden header-md:block">{list.title}</span>
+          </HeaderButton>
+        ))}
       </ButtonGroup>
     </ButtonGroup>
   );
