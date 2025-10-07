@@ -1,5 +1,5 @@
 "use client";
-import { Plus, Search, SlidersHorizontal } from "lucide-react";
+import { ArrowDown10, Plus, Search, SlidersHorizontal } from "lucide-react";
 import { notFound } from "next/navigation";
 import { use, useMemo, useState } from "react";
 
@@ -90,6 +90,8 @@ export default function ListPage({
     });
   }, [list.entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
 
+  const filterIconClasses = "w-4 h-4 text-muted-foreground";
+
   return (
     <div className="mt-5 flex flex-col gap-4">
       {/* Title, count, and add button */}
@@ -135,9 +137,10 @@ export default function ListPage({
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      {/* Additional filters */}
+      {/* TODO: Additional filters / sorting*/}
       <div className="flex gap-2 items-center flex-wrap">
-        <SlidersHorizontal className="w-4 h-4 text-muted-foreground" />
+        {/* FILTERS */}
+        <SlidersHorizontal className={filterIconClasses} />
         <Select value={selectedGenre} onValueChange={setSelectedGenre}>
           <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Genre" />
@@ -177,10 +180,10 @@ export default function ListPage({
             Clear Filters
           </Button>
         )}
+
+        {/* TODO: Sort options. Either popup or toggle between sorts which changes the icon depending. */}
+        <ArrowDown10 className={filterIconClasses} />
       </div>
-
-      {/* Sort options */}
-
 
       {/* Entries grid */}
       <div className="flex-1 container mx-auto px-4">
