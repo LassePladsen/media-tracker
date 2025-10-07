@@ -121,19 +121,17 @@ export default function ListPage({
 
       {/* Status filters - always visible */}
       <div className="flex gap-2 overflow-x-auto pb-2 -mb-2">
-        {Object.entries(watchStatuses).map(([status, label]) => {
-          return (
-            <Button
-              key={status}
-              variant={selectedStatus === status ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedStatus(status as WatchStatus | "all")}
-              className="whitespace-nowrap"
-            >
-              {label}
-            </Button>
-          );
-        })}
+        {Object.entries(watchStatuses).map(([status, label]) => (
+          <Button
+            key={status}
+            variant={selectedStatus === status ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedStatus(status as WatchStatus | "all")}
+            className="whitespace-nowrap"
+          >
+            {label}
+          </Button>
+        ))}
       </div>
 
       {/* Additional filters */}
