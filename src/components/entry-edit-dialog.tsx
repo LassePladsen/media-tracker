@@ -1,0 +1,204 @@
+import { useEffect, useState } from "react";
+
+import { mediaTypeLabels } from "@/data/media";
+import { MediaEntry, MediaType, WatchStatus } from "../types/media";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+
+const statusOptions: { value: Exclude<WatchStatus, "all">; label: string }[] = [
+  { value: "plan-to-watch", label: "Plan to Watch" },
+  { value: "completed", label: "Completed" },
+  { value: "on-hold", label: "On Hold" },
+  { value: "dropped", label: "Dropped" },
+];
+
+export function EntryEditDialog({
+  open,
+  onOpenChange,
+  onSave,
+  entry,
+  mediaType,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (entry: Omit<MediaEntry, "id">) => void;
+  entry?: MediaEntry | null;
+  mediaType: MediaType;
+}) {
+  const [title, setTitle] = useState("");
+  const [genre, setGenre] = useState("");
+  const [year, setYear] = useState("");
+  const [status, setStatus] =
+    useState<Exclude<WatchStatus, "all">>("plan-to-watch");
+  const [rating, setRating] = useState("");
+
+  const isEditMode = !!entry;
+
+  // Reset form when dialog opens/closes or entry changes
+  useEffect(() => {
+    if (open) {
+      if (entry) {
+        setTitle(entry.title);
+        setGenre(entry.genre);
+        setYear(entry.year.toString());
+        setStatus(entry.status);
+        setRating(entry.rating?.toString() || "");
+      } else {
+        setTitle("");
+        setGenre("");
+        setYear(new Date().getFullYear().toString());
+        setStatus("plan-to-watch");
+        setRating("");
+      }
+    }
+  }, [open, entry]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title.trim() || !genre.trim() || !year.trim()) {
+      return;
+    }
+
+    const entry: Omit<MediaEntry, "id"> = {
+      title: title.trim(),
+      genre: genre.trim(),
+      year: parseInt(year),
+      status,
+      rating: rating ? parseFloat(rating) : undefined,
+    };
+
+    onSave(entry);
+    onOpenChange(false);
+  };
+
+  const mediaTypeLabel = mediaTypeLabels[mediaType];
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle>
+            {(isEditMode ? "Edit " : "Add ") +
+              mediaTypeLabel.singular.toLowerCase()}
+          </DialogTitle>
+          <DialogDescription>
+            {isEditMode
+              ? "Update the details for this entry."
+              : "Fill in the details for the new entry."}
+          </DialogDescription>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder={`Enter ${mediaTypeLabel.singular.toLowerCase()} title`}
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="genre">Genre</Label>
+                <Input
+                  id="genre"
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
+                  placeholder="e.g., Action"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="year">Year</Label>
+                <Input
+                  id="year"
+                  type="number"
+                  min="1900"
+                  max={new Date().getFullYear() + 5}
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  placeholder="2024"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="status">Watch Status</Label>
+              <Select
+                value={status}
+                onValueChange={(value) =>
+                  setStatus(value as Exclude<WatchStatus, "all">)
+                }
+              >
+                <SelectTrigger id="status">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {statusOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="rating">Rating (Optional)</Label>
+              <Input
+                id="rating"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                placeholder="e.g., 8.5"
+              />
+              <p className="text-xs text-muted-foreground">
+                Enter a rating between 0 and 10
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit">
+              {isEditMode
+                ? "Save Changes"
+                : `Add ${mediaTypeLabel.singular.toLowerCase()}`}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}

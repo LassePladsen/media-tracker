@@ -15,8 +15,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { dummyData } from "@/data/dummy-data";
-import { watchStatuses } from "@/data/watch-status";
+import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
+import { EntryEditDialog } from "@/components/entry-edit-dialog";
+
+type MediaEntryWithoutId = Omit<MediaEntry, "id">;
 
 export default function ListPage({
   params,
@@ -33,45 +36,49 @@ export default function ListPage({
   );
   const [selectedGenre, setSelectedGenre] = useState<string>("all"); // TODO:
   const [selectedYear, setSelectedYear] = useState<string>("all"); // TODO:
-  const [dialogOpen, setDialogOpen] = useState(false); // TODO:
+  const [isEntryEditOpen, setIsEntryEditOpen] = useState(false); // TODO:
   const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
 
   // TODO: handlers. these are from ai example as of now. LP 2025-10-05
-  // const onUpdateEntry()
-  // const onAddEntry()
+  const onUpdateEntry = (
+    id: MediaEntry["id"],
+    entryData: MediaEntryWithoutId,
+  ) => {};
+
+  const onAddEntry = (entry: MediaEntryWithoutId) => {};
 
   const handleOpenAddDialog = () => {
-    //   setEditingEntry(null);
-    //   setDialogOpen(true);
+    setEditingEntry(null);
+    setIsEntryEditOpen(true);
   };
 
-  const handleOpenEditDialog = (entry: MediaEntry) => {
-    // setEditingEntry(entry);
-    // setDialogOpen(true);
+  const openEntryEdit = (entry: MediaEntry) => {
+    setEditingEntry(entry);
+    setIsEntryEditOpen(true);
   };
 
-  // const handleSaveEntry = (entryData: Omit<MediaEntry, "id">) => {
-  //   if (editingEntry) {
-  //     // onUpdateEntry(editingEntry.id, entryData);
-  //   } else {
-  //     // onAddEntry(entryData);
-  //   }
-  // };
+  const handleSaveEntry = (entryData: MediaEntryWithoutId) => {
+    if (editingEntry) {
+      onUpdateEntry(editingEntry.id, entryData);
+    } else {
+      onAddEntry(entryData);
+    }
+  };
 
-  // // Get unique genres and years for filters
-  // const genres = useMemo(() => {
-  //   const uniqueGenres = Array.from(
-  //     new Set(list.entries.map((e) => e.genre)),
-  //   ).sort();
-  //   return uniqueGenres;
-  // }, [list.entries]);
+  // Get unique genres and years for filters
+  const genres = useMemo(() => {
+    const uniqueGenres = Array.from(
+      new Set(list.entries.map((e) => e.genre)),
+    ).sort();
+    return uniqueGenres;
+  }, [list.entries]);
 
-  // const years = useMemo(() => {
-  //   const uniqueYears = Array.from(new Set(entries.map((e) => e.year))).sort(
-  //     (a, b) => b - a,
-  //   );
-  //   return uniqueYears;
-  // }, [list.entries]);
+  const years = useMemo(() => {
+    const uniqueYears = Array.from(
+      new Set(list.entries.map((e) => e.year)),
+    ).sort((a, b) => b - a);
+    return uniqueYears;
+  }, [list.entries]);
 
   // Filter entries
   const filteredEntries = useMemo(() => {
@@ -105,7 +112,7 @@ export default function ListPage({
         </div>
         <Button onClick={handleOpenAddDialog} className="gap-2">
           <Plus className="w-4 h-4" />
-          Add Entry
+          Add {mediaTypeLabels[list.type].singular.toLowerCase()}
         </Button>
       </div>
 
@@ -139,7 +146,10 @@ export default function ListPage({
 
       {/* TODO: Additional filters / sorting*/}
       <div className="flex gap-2 items-center flex-wrap">
-        {/* FILTERS */}
+        {/* TODO: Sort options. Either popup or toggle between sorts which changes the icon depending. */}
+        <ArrowDown10 className={filterIconClasses} />
+
+        {/* Filters */}
         <SlidersHorizontal className={filterIconClasses} />
         <Select value={selectedGenre} onValueChange={setSelectedGenre}>
           <SelectTrigger className="w-[140px]">
@@ -147,10 +157,11 @@ export default function ListPage({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Genres</SelectItem>
-            {/* TODO: */}
-            {/*genres.map(genre => (
-                  <SelectItem key={genre} value={genre}>{genre}</SelectItem>
-                ))*/}
+            {genres.map((genre) => (
+              <SelectItem key={genre} value={genre}>
+                {genre}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
@@ -160,10 +171,11 @@ export default function ListPage({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Years</SelectItem>
-            {/* TODO: */}
-            {/*years.map(year => (
-                  <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
-                ))*/}
+            {years.map((year) => (
+              <SelectItem key={year} value={year.toString()}>
+                {year}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
@@ -180,9 +192,6 @@ export default function ListPage({
             Clear Filters
           </Button>
         )}
-
-        {/* TODO: Sort options. Either popup or toggle between sorts which changes the icon depending. */}
-        <ArrowDown10 className={filterIconClasses} />
       </div>
 
       {/* Entries grid */}
@@ -197,21 +206,20 @@ export default function ListPage({
               <EntryCard
                 key={entry.id}
                 entry={entry}
-                onClick={() => handleOpenEditDialog(entry)}
+                onClick={() => openEntryEdit(entry)}
               />
             ))}
           </div>
         )}
       </div>
 
-      {/* TODO: <MediaEntryDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
+      <EntryEditDialog
+        open={isEntryEditOpen}
+        onOpenChange={setIsEntryEditOpen}
         onSave={handleSaveEntry}
         entry={editingEntry}
-        mediaType={type}
+        mediaType={list.type}
       />
-      */}
     </div>
   );
 }

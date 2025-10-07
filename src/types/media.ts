@@ -12,7 +12,7 @@ export type WatchStatus =
 export interface MediaEntry {
   id: string;
   title: string;
-  status?: WatchStatus;
+  status: WatchStatus;
   genre: string;
   year: number;
   rating?: number;

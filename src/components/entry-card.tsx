@@ -1,4 +1,4 @@
-import { watchStatusColors, watchStatuses } from "@/data/watch-status";
+import { watchStatusColors, watchStatuses } from "@/data/media";
 import { WatchStatus } from "@/types/media";
 import { Star } from "lucide-react";
 import { MediaEntry } from "../types/media";
