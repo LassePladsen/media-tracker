@@ -1,5 +1,11 @@
 "use client";
-import { ArrowDown10, Minimize2, Plus, Search, SlidersHorizontal } from "lucide-react";
+import {
+  ArrowDown10,
+  Minimize2,
+  Plus,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
 import { notFound } from "next/navigation";
 import { use, useMemo, useState } from "react";
 
@@ -195,11 +201,14 @@ export default function ListPage({
         )}
 
         {/* Toggle small / minimal mode for entry cards */}
-        <Minimize2 className={filterIconClasses + " cursor-pointer"} onClick={() => setIsSmallCards(!isSmallCards)}/>
+        <Minimize2
+          className={filterIconClasses + " cursor-pointer"}
+          onClick={() => setIsSmallCards(!isSmallCards)}
+        />
       </div>
 
       {/* Entries grid */}
-      <div className="flex-1 container mx-auto px-4">
+      <div className="flex-1 container self-center">
         {filteredEntries.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
             <p>No entries found</p>
