@@ -41,7 +41,7 @@ export default function ListHeader() {
         <Home className={HEADER_ICON_SIZE} />
       </HeaderButton>
       <ButtonGroupSeparator />
-      <ButtonGroup className="flex gap-5 pb-2 -mb-2 w-full">
+      <ButtonGroup className="flex gap-3 pb-2 -mb-2 w-full">
         {Object.entries(lists).map(([slug, list], index) => (
           <HeaderButton href={slug} key={index}>
             <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />

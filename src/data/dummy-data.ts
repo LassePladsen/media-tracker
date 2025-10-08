@@ -34,7 +34,7 @@ export const dummyData: MediaData = {
       {
         id: "m4",
         title: "Pulp Fiction",
-        status: "completed",
+        status: "watching",
         genre: "Crime",
         year: 1994,
         rating: 8,
@@ -73,7 +73,7 @@ export const dummyData: MediaData = {
       {
         id: "m9",
         title: "The Godfather",
-        status: "completed",
+        status: "watching",
         genre: "Crime",
         year: 1972,
         rating: 10,
@@ -121,14 +121,14 @@ export const dummyData: MediaData = {
       {
         id: "s4",
         title: "The Wire",
-        status: "plan-to-watch",
+        status: "watching",
         genre: "Crime",
         year: 2002,
       },
       {
         id: "s5",
         title: "True Detective",
-        status: "completed",
+        status: "watching",
         genre: "Mystery",
         year: 2014,
         rating: 9,

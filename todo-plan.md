@@ -26,7 +26,6 @@ Core:
     - [] Completed
     - [] Easy one-click toggle between plan to watch / have watched from preview and in detailed view
     - [] Upon adding to list, default to plan to watch with 0 episodes watched
-    - [] Upon marking as completed: ask for rating?
 - [] Watch list (entries in plan to watch)
     - [] Separate for each list / media type
     - [] Able to reorder the watch lists so as to prioritize what to watch first etc.
@@ -60,7 +59,7 @@ Core:
 - [] Right now the routes seem to be much slower than before i moved them into (lists). Im guessing its not prefetching correctly anymore. Look into that. POSSIBLY this will be fixed on production build. Needs testing.
 - [] Toggleable state for minimum view, i.e showing the cards as small as possible, since they take up a lot of screen room. Especially this for mobile (maybe default it if on mobile)
 - [] Sorting options. Year, genre, rating, custom (drag & drop would be cool, but on wishlist)
-
+- [] Upon marking as completed: ask for rating. Small popup with stars, should support clicking between or a good solution for this. Easiest is dropdown...
 
 Wishlist of potential extra features:
 - [] details like images, release dates, episode count, categories, etc. from API's like imdb (movies+tv) and myanimelist (anime) if possible. Alternatively just a link to imdb / mal if found, needs api too.

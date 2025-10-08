@@ -1,10 +1,10 @@
 "use client";
 import {
   ArrowDown10,
+  Funnel,
   Minimize2,
   Plus,
   Search,
-  SlidersHorizontal,
 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { use, useMemo, useState } from "react";
@@ -24,6 +24,7 @@ import {
 import { dummyData } from "@/data/dummy-data";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
+import { updateEntry, addEntry } from "@/lib/media-entry";
 
 type MediaEntryWithoutId = Omit<MediaEntry, "id">;
 
@@ -47,13 +48,6 @@ export default function ListPage({
   const [isSmallCards, setIsSmallCards] = useState(false);
 
   // TODO: handlers. these are from ai example as of now. LP 2025-10-05
-  const onUpdateEntry = (
-    id: MediaEntry["id"],
-    entryData: MediaEntryWithoutId,
-  ) => {};
-
-  const onAddEntry = (entry: MediaEntryWithoutId) => {};
-
   const handleOpenAddDialog = () => {
     setEditingEntry(null);
     setIsEntryEditOpen(true);
@@ -66,9 +60,9 @@ export default function ListPage({
 
   const handleSaveEntry = (entryData: MediaEntryWithoutId) => {
     if (editingEntry) {
-      onUpdateEntry(editingEntry.id, entryData);
+      updateEntry(editingEntry.id, entryData);
     } else {
-      onAddEntry(entryData);
+      addEntry(entryData);
     }
   };
 
@@ -135,19 +129,21 @@ export default function ListPage({
         />
       </div>
 
-      {/* Status filters - always visible */}
+      {/* Watch status filters scrollbar - always visible */}
       <ScrollArea type="auto" className="pb-4 -mb-2 whitespace-nowrap">
-        {Object.entries(watchStatuses).map(([status, label]) => (
-          <Button
-            key={status}
-            variant={selectedStatus === status ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSelectedStatus(status as WatchStatus | "all")}
-            className="whitespace-nowrap"
-          >
-            {label}
-          </Button>
-        ))}
+        <div className="flex gap-1">
+          {Object.entries(watchStatuses).map(([status, label]) => (
+            <Button
+              key={status}
+              variant={selectedStatus === status ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSelectedStatus(status as WatchStatus | "all")}
+              className="whitespace-nowrap"
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
@@ -157,7 +153,7 @@ export default function ListPage({
         <ArrowDown10 className={filterIconClasses} />
 
         {/* Filters */}
-        <SlidersHorizontal className={filterIconClasses} />
+        <Funnel className={filterIconClasses} />
         <Select value={selectedGenre} onValueChange={setSelectedGenre}>
           <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Genre" />
@@ -214,7 +210,7 @@ export default function ListPage({
             <p>No entries found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 " + (isSmallCards ? "gap-2" : "gap-4")}>
             {filteredEntries.map((entry) => (
               <EntryCard
                 smallMode={isSmallCards}
