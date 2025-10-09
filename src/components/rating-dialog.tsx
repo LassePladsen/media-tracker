@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
+import RatingStars from "./rating-star";
 
 type StarPropsWithoutOnClick = Omit<ComponentProps<typeof StarHalf>, "onClick">;
 
@@ -61,52 +62,52 @@ export function RatingDialog({
     onOpenChange(false);
   };
 
-  const SplitStar = memo(function ({
-    number,
-    ...props
-  }: StarPropsWithoutOnClick & { number: number }) {
-    return (
-      <div className="flex flex-row -space-x-6">
-        <StarHalf {...props} onClick={() => setSelectedRating(number)} />
-        <StarHalf
-          {...props}
-          className={props.className + " -scale-x-100"}
-          onClick={() => setSelectedRating(number + 0.5)}
-        />
-      </div>
-    );
-  });
+  // const SplitStar = memo(function ({
+  //   number,
+  //   ...props
+  // }: StarPropsWithoutOnClick & { number: number }) {
+  //   return (
+  //     <div className="flex flex-row -space-x-6">
+  //       <StarHalf {...props} onClick={() => setSelectedRating(number)} />
+  //       <StarHalf
+  //         {...props}
+  //         className={props.className + " -scale-x-100"}
+  //         onClick={() => setSelectedRating(number + 0.5)}
+  //       />
+  //     </div>
+  //   );
+  // });
 
-  const RatingStars = memo(function () {
-    return (
-      <div className="flex flex-row gap-1 pb-4">
-        {Array.from(Array(10).keys()).map(
-          (
-            num, // 10 stars
-          ) => {
-            const starNum = num + 1;
-            return (
-              // <MaybeHalfStar
-              <SplitStar
-                number={starNum}
-                // half={
-                //   // A half star if the currently selected rating is a half rating (e.g 5.5 instead of 5.0)
-                //   !!selectedRating &&
-                //   starNum < selectedRating &&
-                //   Math.abs(starNum - selectedRating) === 0.5
-                // }
-                fill={
-                  selectedRating && selectedRating >= starNum ? "yellow" : ""
-                }
-                strokeWidth="0.8"
-                className="hover:text-blue-300"
-              />
-            );
-          },
-        )}
-      </div>
-    );
-  });
+  // const RatingStars2 = memo(function () {
+  //   return (
+  //     <div className="flex flex-row gap-1 pb-4">
+  //       {Array.from(Array(10).keys()).map(
+  //         (
+  //           num, // 10 stars
+  //         ) => {
+  //           const starNum = num + 1;
+  //           return (
+  //             // <MaybeHalfStar
+  //             <SplitStar
+  //               number={starNum}
+  //               // half={
+  //               //   // A half star if the currently selected rating is a half rating (e.g 5.5 instead of 5.0)
+  //               //   !!selectedRating &&
+  //               //   starNum < selectedRating &&
+  //               //   Math.abs(starNum - selectedRating) === 0.5
+  //               // }
+  //               fill={
+  //                 selectedRating && selectedRating >= starNum ? "yellow" : ""
+  //               }
+  //               strokeWidth="0.8"
+  //               className="hover:text-blue-300"
+  //             />
+  //           );
+  //         },
+  //       )}
+  //     </div>
+  //   );
+  // });
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -117,8 +118,9 @@ export function RatingDialog({
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="py-4 flex flex-col gap-5">
           <RatingStars />
+          {/*<DialogFooter className="flex-col-reverse sm:flex-col-reverse justify-center sm:justify-center">*/}
           <DialogFooter>
             <Button
               type="button"
