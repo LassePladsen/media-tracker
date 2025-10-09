@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { ComponentProps, memo, useEffect, useState } from "react";
+import { Star, StarHalf } from "lucide-react";
 
 import { MediaEntry, WatchStatus } from "../types/media";
 import { Button } from "./ui/button";
@@ -9,18 +10,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import { Star } from "lucide-react";
+
+type StarPropsWithoutOnClick = Omit<ComponentProps<typeof StarHalf>, "onClick">;
 
 // const starNumbers = [
-//   // 0.5 to 10.0 with 0.5 as step.
-//   0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9,
-//   9.5, 10,
+//   0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5,
+//   10,
 // ];
 
-const starNumbers = [
-  // 0 to 10 with 0.5 as step.
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-];
+// /** StarHalf if half true, else Star */
+// function MaybeHalfStar({
+//   number,
+//   half,
+//   ...props
+// }: ComponentProps<typeof Star> & { number: number; half: boolean }) {
+//   if (half) return <StarHalf {...props} />;
+//   return <Star {...props} />;
+// }
+//
+/** StarHalf's merged together so each half is clickable */
 
 export function RatingDialog({
   open,
@@ -53,18 +61,52 @@ export function RatingDialog({
     onOpenChange(false);
   };
 
-  function RatingStars() {
+  const SplitStar = memo(function ({
+    number,
+    ...props
+  }: StarPropsWithoutOnClick & { number: number }) {
     return (
-      <div className={`grid grid-cols-${starNumbers.length} gap-2 pb-4`}>
-        {starNumbers.map((num) => (
-          <Star
-            fill={selectedRating && selectedRating >= num ? "yellow" : ""}
-            className="hover:scale-125 hover:text-blue-300 "
-          />
-        ))}
+      <div className="flex flex-row -space-x-6">
+        <StarHalf {...props} onClick={() => setSelectedRating(number)} />
+        <StarHalf
+          {...props}
+          className={props.className + " -scale-x-100"}
+          onClick={() => setSelectedRating(number + 0.5)}
+        />
       </div>
     );
-  }
+  });
+
+  const RatingStars = memo(function () {
+    return (
+      <div className="flex flex-row gap-1 pb-4">
+        {Array.from(Array(10).keys()).map(
+          (
+            num, // 10 stars
+          ) => {
+            const starNum = num + 1;
+            return (
+              // <MaybeHalfStar
+              <SplitStar
+                number={starNum}
+                // half={
+                //   // A half star if the currently selected rating is a half rating (e.g 5.5 instead of 5.0)
+                //   !!selectedRating &&
+                //   starNum < selectedRating &&
+                //   Math.abs(starNum - selectedRating) === 0.5
+                // }
+                fill={
+                  selectedRating && selectedRating >= starNum ? "yellow" : ""
+                }
+                strokeWidth="0.8"
+                className="hover:text-blue-300"
+              />
+            );
+          },
+        )}
+      </div>
+    );
+  });
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

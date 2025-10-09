@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import { MediaIcon } from "./ui/media-icon";
 
-const HEADER_ICON_SIZE = "w-4 h-4";
+export const HEADER_ICON_SIZE = "w-4 h-4";
 
 function HeaderButton({
   href,

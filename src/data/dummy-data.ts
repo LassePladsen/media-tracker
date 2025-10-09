@@ -95,6 +95,14 @@ export const dummyData: MediaData = {
     title: "TV Shows",
     entries: [
       {
+        id: "s10",
+        title: "Better Call Saul",
+        status: "completed",
+        genre: "Crime",
+        year: 2015,
+        rating: 5.5,
+      },
+      {
         id: "s1",
         title: "Breaking Bad",
         status: "completed",
@@ -163,14 +171,6 @@ export const dummyData: MediaData = {
         genre: "Sci-Fi",
         year: 2016,
         rating: 6,
-      },
-      {
-        id: "s10",
-        title: "Better Call Saul",
-        status: "completed",
-        genre: "Crime",
-        year: 2015,
-        rating: 9,
       },
     ],
   },
