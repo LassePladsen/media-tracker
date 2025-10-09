@@ -28,7 +28,7 @@ const statusOptions: { value: Exclude<WatchStatus, "all">; label: string }[] = [
   { value: "dropped", label: "Dropped" },
 ];
 
-export function EntryEditDialog({
+export function EntryDialog({
   open,
   onOpenChange,
   onSave,
@@ -37,7 +37,7 @@ export function EntryEditDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (entry: Omit<MediaEntry, "id">) => void;
+  onSave: (entryData: Omit<MediaEntry, "id">) => void;
   entry?: MediaEntry | null;
   mediaType: MediaType;
 }) {

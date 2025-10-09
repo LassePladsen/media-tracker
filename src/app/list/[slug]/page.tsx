@@ -1,16 +1,10 @@
 "use client";
-import {
-  ArrowDown10,
-  Funnel,
-  Minimize2,
-  Plus,
-  Search,
-} from "lucide-react";
+import { ArrowDown10, Funnel, Minimize2, Plus, Search } from "lucide-react";
 import { notFound } from "next/navigation";
 import { use, useMemo, useState } from "react";
 
 import EntryCard from "@/components/entry-card";
-import { EntryEditDialog } from "@/components/entry-edit-dialog";
+import { EntryDialog } from "@/components/entry-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -43,19 +37,19 @@ export default function ListPage({
   );
   const [selectedGenre, setSelectedGenre] = useState<string>("all"); // TODO:
   const [selectedYear, setSelectedYear] = useState<string>("all"); // TODO:
-  const [isEntryEditOpen, setIsEntryEditOpen] = useState(false); // TODO:
-  const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
   const [isSmallCards, setIsSmallCards] = useState(false);
+  const [showEntryDialog, setShowEntryDialog] = useState(false); // TODO:
+  const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
 
   // TODO: handlers. these are from ai example as of now. LP 2025-10-05
   const handleOpenAddDialog = () => {
     setEditingEntry(null);
-    setIsEntryEditOpen(true);
+    setShowEntryDialog(true);
   };
 
   const openEntryEdit = (entry: MediaEntry) => {
     setEditingEntry(entry);
-    setIsEntryEditOpen(true);
+    setShowEntryDialog(true);
   };
 
   const handleSaveEntry = (entryData: MediaEntryWithoutId) => {
@@ -210,7 +204,12 @@ export default function ListPage({
             <p>No entries found</p>
           </div>
         ) : (
-          <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 " + (isSmallCards ? "gap-2" : "gap-4")}>
+          <div
+            className={
+              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 " +
+              (isSmallCards ? "gap-2" : "gap-4")
+            }
+          >
             {filteredEntries.map((entry) => (
               <EntryCard
                 smallMode={isSmallCards}
@@ -223,9 +222,9 @@ export default function ListPage({
         )}
       </div>
 
-      <EntryEditDialog
-        open={isEntryEditOpen}
-        onOpenChange={setIsEntryEditOpen}
+      <EntryDialog
+        open={showEntryDialog}
+        onOpenChange={setShowEntryDialog}
         onSave={handleSaveEntry}
         entry={editingEntry}
         mediaType={list.type}
