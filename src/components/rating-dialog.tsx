@@ -7,19 +7,19 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "./ui/dialog";
+import { Star } from "lucide-react";
 
-const possibleRatings = [
+// const starNumbers = [
+//   // 0.5 to 10.0 with 0.5 as step.
+//   0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9,
+//   9.5, 10,
+// ];
+
+const starNumbers = [
   // 0 to 10 with 0.5 as step.
-  0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9,
-  9.5, 10,
-];
-const statusOptions: { value: Exclude<WatchStatus, "all">; label: string }[] = [
-  { value: "plan-to-watch", label: "Plan to Watch" },
-  { value: "completed", label: "Completed" },
-  { value: "on-hold", label: "On Hold" },
-  { value: "dropped", label: "Dropped" },
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
 ];
 
 export function RatingDialog({
@@ -33,9 +33,9 @@ export function RatingDialog({
   onSave: (entryData: Omit<MediaEntry, "id">) => void;
   entry: MediaEntry;
 }) {
-  const [newRating, setNewRating] = useState<MediaEntry["rating"] | undefined>(
-    undefined,
-  );
+  const [selectedRating, setSelectedRating] = useState<
+    MediaEntry["rating"] | undefined
+  >(undefined);
 
   const rating = entry.rating;
   const isEditMode = !!rating;
@@ -43,19 +43,32 @@ export function RatingDialog({
   // Reset form when dialog opens/closes or old rating changes
   useEffect(() => {
     if (!open || !rating) return;
-    setNewRating(rating);
+    setSelectedRating(rating);
   }, [open, rating]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!rating) return;
-    onSave({ ...entry, rating: newRating });
+    onSave({ ...entry, rating: selectedRating });
     onOpenChange(false);
   };
 
+  function RatingStars() {
+    return (
+      <div className={`grid grid-cols-${starNumbers.length} gap-2 pb-4`}>
+        {starNumbers.map((num) => (
+          <Star
+            fill={selectedRating && selectedRating >= num ? "yellow" : ""}
+            className="hover:scale-125 hover:text-blue-300 "
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[320px]">
         <DialogHeader>
           <DialogTitle>
             {(isEditMode ? "Edit rating for " : "Rate ") + entry.title}
@@ -63,7 +76,7 @@ export function RatingDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          form is todo...
+          <RatingStars />
           <DialogFooter>
             <Button
               type="button"
