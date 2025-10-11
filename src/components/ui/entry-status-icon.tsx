@@ -1,5 +1,6 @@
-import { Play, BookmarkCheck, Repeat } from "lucide-react";
+import { BookmarkCheck, Play, Repeat } from "lucide-react";
 
+import { watchStatusColors } from "@/data/media";
 import { WatchStatus } from "@/types/media";
 
 export interface EntryStatusIconProps {
@@ -12,13 +13,18 @@ export default function EntryStatusIcon({
   status,
   handleChangeStatus,
 }: EntryStatusIconProps) {
-  const iconClasses =
-    "w-5 h-5 text-muted-foreground hover:scale-125 hover:cursor-pointer";
+  const classes =
+    "w-5 h-5 text-muted-foreground hover:scale-125 hover:cursor-pointer ";
   switch (status) {
     case "plan-to-watch": // Click to start watching
       return (
         <Play
-          className={iconClasses + " hover:text-primary"}
+          className={
+            classes +
+            (watchStatusColors.fg["watching"]
+              ? `hover:${watchStatusColors.fg["watching"]}`
+              : "")
+          }
           onClick={(e) => {
             e.stopPropagation();
             handleChangeStatus("watching");
@@ -28,7 +34,12 @@ export default function EntryStatusIcon({
     case "watching": // click to complete
       return (
         <BookmarkCheck
-          className={iconClasses + " hover:text-green-300"}
+          className={
+            classes +
+            (watchStatusColors.fg["completed"]
+              ? `hover:${watchStatusColors.fg["completed"]}`
+              : "")
+          }
           onClick={(e) => {
             e.stopPropagation();
             handleChangeStatus("completed");
@@ -38,7 +49,12 @@ export default function EntryStatusIcon({
     case "completed": // click to rewatch
       return (
         <Repeat
-          className={iconClasses + " hover:text-blue-300"}
+          className={
+            classes +
+            (watchStatusColors.fg["watching"]
+              ? `hover:${watchStatusColors.fg["watching"]}`
+              : "")
+          }
           onClick={(e) => {
             e.stopPropagation();
             handleChangeStatus("watching");

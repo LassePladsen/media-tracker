@@ -79,7 +79,7 @@ export default function Entrycard({
                 {showStatus && (
                   <Badge
                     variant="outline"
-                    className={watchStatusColors[entry.status]}
+                    className={watchStatusColors.bg[entry.status]}
                   >
                     {watchStatuses[entry.status]}
                   </Badge>
