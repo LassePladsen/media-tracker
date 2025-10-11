@@ -14,12 +14,14 @@ export interface EntryCardProps {
   entry: MediaEntry;
   onClick?: () => void;
   smallMode: boolean;
+  showStatus?: boolean;
 }
 
 export default function Entrycard({
   entry,
   onClick,
   smallMode = false,
+  showStatus = true,
 }: EntryCardProps) {
   const [showRatingDialog, setShowRatingDialog] = useState(false);
 
@@ -74,12 +76,14 @@ export default function Entrycard({
           {!smallMode && (
             <div className="flex flex-row justify-between gap-2">
               <div className="flex flex-wrap gap-2">
-                <Badge
-                  variant="outline"
-                  className={watchStatusColors[entry.status]}
-                >
-                  {watchStatuses[entry.status]}
-                </Badge>
+                {showStatus && (
+                  <Badge
+                    variant="outline"
+                    className={watchStatusColors[entry.status]}
+                  >
+                    {watchStatuses[entry.status]}
+                  </Badge>
+                )}
                 <Badge variant="secondary">{entry.genre}</Badge>
                 <Badge variant="secondary">{entry.year}</Badge>
               </div>

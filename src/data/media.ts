@@ -6,9 +6,9 @@ export const watchStatuses: Record<WatchStatus | "all", string> = {
   "plan-to-watch": "Plan to Watch",
   watching: "Watching",
   completed: "Completed",
+  rewatching: "Rewatching",
   "on-hold": "On Hold",
   dropped: "Dropped",
-  rewatching: "Rewatching",
 } as const;
 
 export const watchStatusColors: Record<keyof typeof watchStatuses, string> = {

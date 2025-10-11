@@ -212,6 +212,7 @@ export default function ListPage({
           >
             {filteredEntries.map((entry) => (
               <EntryCard
+                showStatus={selectedStatus === "all"}
                 smallMode={isSmallCards}
                 key={entry.id}
                 entry={entry}
