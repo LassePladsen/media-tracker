@@ -33,7 +33,8 @@ export default function Entrycard({
       if (entry.status === toStatus) return;
       updateEntry(entry.id, { ...entry, status: toStatus });
       // If changed to completed, ask user for rating
-      if (!showRatingDialog) setShowRatingDialog(true);
+      if (toStatus === "completed" && !showRatingDialog)
+        setShowRatingDialog(true);
     },
     [entry, showRatingDialog],
   );
