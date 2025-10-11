@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { updateEntry } from "@/lib/media-entry";
 import { MediaEntry } from "../types/media";
-import RatingStars from "./rating-star";
+import RatingStars from "./rating-star-row";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -12,17 +12,19 @@ import {
   DialogTitle,
 } from "./ui/dialog";
 
+export interface RatingDialogProps {
+  openState: boolean;
+  setOpenState: (open: boolean) => void;
+  onSave: (entryData: Omit<MediaEntry, "id">) => void;
+  entry: MediaEntry;
+}
+
 export function RatingDialog({
   openState,
   setOpenState,
   onSave,
   entry,
-}: {
-  openState: boolean;
-  setOpenState: (open: boolean) => void;
-  onSave: (entryData: Omit<MediaEntry, "id">) => void;
-  entry: MediaEntry;
-}) {
+}: RatingDialogProps) {
   const [selectedRating, setSelectedRating] = useState<
     MediaEntry["rating"] | undefined
   >(undefined);

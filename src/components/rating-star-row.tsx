@@ -3,21 +3,21 @@ import { Star } from "lucide-react";
 
 type StarFill = "empty" | "half" | "full";
 
-interface StarRatingProps {
+export interface RatingStarRowProps {
   initialRating?: number;
   onChange?: (rating: number) => void;
   className?: string;
 }
 
 /** 
-Ten rating star-buttons where you can click each half for a half rating 
+Row of ten rating star buttons where you can click each half for a half rating 
 This is all by Claude so don't judge me, my attempt didn't even work
 */
-export default function StarRating({
+export default function RatingStarRow({
   initialRating = 0,
   onChange,
   className,
-}: StarRatingProps) {
+}: RatingStarRowProps) {
   const [rating, setRating] = useState<number>(initialRating);
   const [hover, setHover] = useState<number>(0);
 

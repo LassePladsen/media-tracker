@@ -1,83 +1,15 @@
-import { MouseEvent, useCallback, memo, useState, ComponentProps } from "react";
-import { BookmarkCheck, Star, Play, Repeat } from "lucide-react";
+import { useCallback, useState } from "react";
 
 import { watchStatusColors, watchStatuses } from "@/data/media";
+import { updateEntry } from "@/lib/media-entry";
 import { WatchStatus } from "@/types/media";
 import { MediaEntry } from "../types/media";
+import EntryStatusIcon from "./entry-status-icon";
+import { RatingDialog } from "./rating-dialog";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
-import { updateEntry } from "@/lib/media-entry";
-import { RatingDialog } from "./rating-dialog";
+import RatingStar from "./ui/rating-star";
 
-/** Icon button to quick-switch to a new status, different icons for each one. E.g for 'watching' it would be a checkmark icon which sets to 'completed' */
-function StatusActionIcon({
-  status,
-  handleChangeStatus,
-}: {
-  status: WatchStatus;
-  handleChangeStatus: (status: WatchStatus) => void;
-}) {
-  const iconClasses =
-    "w-5 h-5 text-muted-foreground hover:scale-125 hover:cursor-pointer";
-  switch (status) {
-    case "plan-to-watch": // Click to start watching
-      return (
-        <Play
-          className={iconClasses + " hover:text-primary"}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleChangeStatus("watching");
-          }}
-        />
-      );
-    case "watching": // click to complete
-      return (
-        <BookmarkCheck
-          className={iconClasses + " hover:text-green-300"}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleChangeStatus("completed");
-          }}
-        />
-      );
-    case "completed": // click to rewatch
-      return (
-        <Repeat
-          className={iconClasses + " hover:text-blue-300"}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleChangeStatus("watching");
-          }}
-        />
-      );
-  }
-}
-
-function RatingStar({
-  className,
-  onClick,
-  rating,
-}: {
-  className?: string;
-  onClick?: () => void;
-  rating: number;
-}) {
-  return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        if (onClick) onClick();
-      }}
-      className={
-        "flex items-center gap-1 text-amber-400 hover:scale-125 hover:cursor-pointer " +
-        className
-      }
-    >
-      <Star className="w-4 h-4 fill-current" />
-      <span className="text-sm">{rating}</span>
-    </div>
-  );
-}
 
 export default function Entrycard({
   entry,
@@ -130,7 +62,7 @@ export default function Entrycard({
                   onClick={() => setShowRatingDialog(true)}
                 />
               )}
-              <StatusActionIcon
+              <EntryStatusIcon
                 status={entry.status}
                 handleChangeStatus={changeEntryStatus}
               />
