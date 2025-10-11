@@ -101,6 +101,7 @@ export const dummyData: MediaData = {
         genre: "Crime",
         year: 2015,
         rating: 5.5,
+        episodesWatched: 5,
       },
       {
         id: "s1",

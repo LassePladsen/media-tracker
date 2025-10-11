@@ -46,6 +46,7 @@ export function EntryDialog({
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
+  const [episodesWatched, setEpisodesWatched] = useState("");
   const [status, setStatus] =
     useState<Exclude<WatchStatus, "all">>("plan-to-watch");
   const [rating, setRating] = useState("");
@@ -59,12 +60,14 @@ export function EntryDialog({
         setTitle(entry.title);
         setGenre(entry.genre);
         setYear(entry.year.toString());
+        setEpisodesWatched(entry.episodesWatched?.toString() || "");
         setStatus(entry.status);
         setRating(entry.rating?.toString() || "");
       } else {
         setTitle("");
         setGenre("");
         setYear(new Date().getFullYear().toString());
+        setEpisodesWatched("");
         setStatus("plan-to-watch");
         setRating("");
       }
@@ -106,6 +109,7 @@ export function EntryDialog({
           </DialogDescription>
         </DialogHeader>
 
+        {/* Title */}
         <form onSubmit={handleSubmit}>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
@@ -119,6 +123,8 @@ export function EntryDialog({
               />
             </div>
 
+            {/* ROW: genre and year */}
+            {/* Genre */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="genre">Genre</Label>
@@ -131,13 +137,12 @@ export function EntryDialog({
                 />
               </div>
 
+              {/* Year */}
               <div className="space-y-2">
                 <Label htmlFor="year">Year</Label>
                 <Input
                   id="year"
                   type="number"
-                  min="1900"
-                  max={new Date().getFullYear() + 5}
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                   placeholder="2024"
@@ -146,27 +151,48 @@ export function EntryDialog({
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="status">Watch Status</Label>
-              <Select
-                value={status}
-                onValueChange={(value) =>
-                  setStatus(value as Exclude<WatchStatus, "all">)
-                }
-              >
-                <SelectTrigger id="status">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {statusOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            {/* ROW: watch status and episode count */}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Watch status */}
+              <div className="space-y-2">
+                <Label htmlFor="status">Watch Status</Label>
+                <Select
+                  value={status}
+                  onValueChange={(value) =>
+                    setStatus(value as Exclude<WatchStatus, "all">)
+                  }
+                >
+                  <SelectTrigger className="w-full" id="status">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {statusOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Episode count */}
+              <div className="space-y-2">
+                <Label htmlFor="episodes-watched">
+                  Episode count (optional)
+                </Label>
+                <Input
+                  id="episodes-watched"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={episodesWatched}
+                  onChange={(e) => setEpisodesWatched(e.target.value)}
+                  placeholder="e.g., 5"
+                />
+              </div>
             </div>
 
+            {/* Rating */}
             <div className="space-y-2">
               <Label htmlFor="rating">Rating (Optional)</Label>
               <Input
@@ -185,6 +211,7 @@ export function EntryDialog({
             </div>
           </div>
 
+          {/* Buttons */}
           <DialogFooter>
             <Button
               type="button"

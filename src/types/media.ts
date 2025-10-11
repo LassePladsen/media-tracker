@@ -17,6 +17,7 @@ export interface MediaEntry {
   year: number;
   rating?: number;
   imageUrl?: string;
+  episodesWatched?: number;
 }
 
 export interface MediaList {
