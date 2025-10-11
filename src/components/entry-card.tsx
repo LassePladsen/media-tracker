@@ -12,13 +12,10 @@ import { RatingDialog } from "./rating-dialog";
 /** Icon button to quick-switch to a new status, different icons for each one. E.g for 'watching' it would be a checkmark icon which sets to 'completed' */
 function StatusActionIcon({
   status,
-  onClick,
+  handleChangeStatus,
 }: {
   status: WatchStatus;
-  onClick: (
-    status: WatchStatus,
-    event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>,
-  ) => void;
+  handleChangeStatus: (status: WatchStatus) => void;
 }) {
   const iconClasses =
     "w-5 h-5 text-muted-foreground hover:scale-125 hover:cursor-pointer";
@@ -27,21 +24,30 @@ function StatusActionIcon({
       return (
         <Play
           className={iconClasses + " hover:text-primary"}
-          onClick={(e) => onClick("watching", e)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleChangeStatus("watching");
+          }}
         />
       );
     case "watching": // click to complete
       return (
         <BookmarkCheck
           className={iconClasses + " hover:text-green-300"}
-          onClick={(e) => onClick("completed", e)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleChangeStatus("completed");
+          }}
         />
       );
     case "completed": // click to rewatch
       return (
         <Repeat
           className={iconClasses + " hover:text-blue-300"}
-          onClick={(e) => onClick("watching", e)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleChangeStatus("watching");
+          }}
         />
       );
   }
@@ -90,11 +96,7 @@ export default function Entrycard({
   );
 
   const changeEntryStatus = useCallback(
-    (
-      toStatus: WatchStatus,
-      event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>,
-    ) => {
-      if (event) event.stopPropagation();
+    (toStatus: WatchStatus) => {
       if (entry.status === toStatus) return;
       updateEntry(entry.id, { ...entry, status: toStatus });
       // If changed to completed, ask user for rating
@@ -130,7 +132,7 @@ export default function Entrycard({
               )}
               <StatusActionIcon
                 status={entry.status}
-                onClick={changeEntryStatus}
+                handleChangeStatus={changeEntryStatus}
               />
             </div>
           </div>

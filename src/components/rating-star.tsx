@@ -16,7 +16,7 @@ This is all by Claude so don't judge me, my attempt didn't even work
 export default function StarRating({
   initialRating = 0,
   onChange,
-  className
+  className,
 }: StarRatingProps) {
   const [rating, setRating] = useState<number>(initialRating);
   const [hover, setHover] = useState<number>(0);
@@ -68,7 +68,10 @@ export default function StarRating({
                   className="absolute top-0 left-0 w-1/2 h-full cursor-pointer z-10"
                   onMouseEnter={() => handleMouseEnter(i + 0.5)}
                   onMouseLeave={handleMouseLeave}
-                  onClick={() => handleClick(i + 0.5)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClick(i + 0.5);
+                  }}
                 />
 
                 {/* Right half */}
@@ -76,7 +79,10 @@ export default function StarRating({
                   className="absolute top-0 right-0 w-1/2 h-full cursor-pointer z-10"
                   onMouseEnter={() => handleMouseEnter(i + 1)}
                   onMouseLeave={handleMouseLeave}
-                  onClick={() => handleClick(i + 1)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClick(i + 1);
+                  }}
                 />
 
                 {/* Star rendering with hover effect */}
