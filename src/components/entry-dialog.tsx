@@ -28,19 +28,21 @@ const statusOptions: { value: Exclude<WatchStatus, "all">; label: string }[] = [
   { value: "dropped", label: "Dropped" },
 ];
 
+export interface EntryDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (entryData: Omit<MediaEntry, "id">) => void;
+  entry?: MediaEntry | null;
+  mediaType: MediaType;
+}
+
 export function EntryDialog({
   open,
   onOpenChange,
   onSave,
   entry,
   mediaType,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSave: (entryData: Omit<MediaEntry, "id">) => void;
-  entry?: MediaEntry | null;
-  mediaType: MediaType;
-}) {
+}: EntryDialogProps) {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");

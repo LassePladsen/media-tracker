@@ -3,8 +3,8 @@ import { Play, BookmarkCheck, Repeat } from "lucide-react";
 import { WatchStatus } from "@/types/media";
 
 export interface EntryStatusIconProps {
-    status: WatchStatus;
-    handleChangeStatus: (status: WatchStatus) => void;
+  status: WatchStatus;
+  handleChangeStatus: (status: WatchStatus) => void;
 }
 
 /** Icon button to quick-switch to a new status, different icons for each one. E.g for 'watching' it would be a checkmark icon which sets to 'completed' */

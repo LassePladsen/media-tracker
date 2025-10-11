@@ -10,16 +10,17 @@ import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import RatingStar from "./ui/rating-star";
 
+export interface EntryCardProps {
+  entry: MediaEntry;
+  onClick?: () => void;
+  smallMode: boolean;
+}
 
 export default function Entrycard({
   entry,
   onClick,
   smallMode = false,
-}: {
-  entry: MediaEntry;
-  onClick?: () => void;
-  smallMode: boolean;
-}) {
+}: EntryCardProps) {
   const [showRatingDialog, setShowRatingDialog] = useState(false);
 
   const handleSaveRating = useCallback(

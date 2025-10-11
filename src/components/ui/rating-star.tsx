@@ -1,9 +1,9 @@
 import { Star } from "lucide-react";
 
 export interface RatingStarProps {
-    className?: string;
-    onClick?: () => void;
-    rating: number;
+  className?: string;
+  onClick?: () => void;
+  rating: number;
 }
 
 export default function RatingStar({
