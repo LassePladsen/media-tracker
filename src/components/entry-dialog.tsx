@@ -187,19 +187,19 @@ export function EntryDialog({
 
             {/* Rating */}
             <div className="space-y-2">
-              <Label htmlFor="rating">Rating (Optional)</Label>
+              <Label htmlFor="rating">Rating</Label>
               <Input
                 id="rating"
                 type="number"
-                min="0"
+                min="0.5"
                 max="10"
-                step="0.1"
+                step="0.5"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
                 placeholder="e.g., 8.5"
               />
               <p className="text-xs text-muted-foreground">
-                Enter a rating between 0 and 10
+                Enter a rating between 0.5 and 10.0
               </p>
             </div>
           </div>
