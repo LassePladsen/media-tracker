@@ -88,7 +88,7 @@ export default function Entrycard({
   onClick?: () => void;
   smallMode: boolean;
 }) {
-  const [showRatingDialog, setShowRatingDialog] = useState(false); // TODO: the dialog pls
+  const [showRatingDialog, setShowRatingDialog] = useState(false);
 
   const handleSaveRating = useCallback(
     (entryData: Omit<MediaEntry, "id">) => updateEntry(entry.id, entryData),
@@ -161,8 +161,8 @@ export default function Entrycard({
       </Card>
 
       <RatingDialog
-        open={showRatingDialog}
-        onOpenChange={setShowRatingDialog}
+        openState={showRatingDialog}
+        setOpenState={setShowRatingDialog}
         onSave={handleSaveRating}
         entry={entry}
       />

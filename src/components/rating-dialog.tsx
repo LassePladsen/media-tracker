@@ -13,13 +13,13 @@ import {
 } from "./ui/dialog";
 
 export function RatingDialog({
-  open,
-  onOpenChange,
+  openState,
+  setOpenState,
   onSave,
   entry,
 }: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  openState: boolean;
+  setOpenState: (open: boolean) => void;
   onSave: (entryData: Omit<MediaEntry, "id">) => void;
   entry: MediaEntry;
 }) {
@@ -32,19 +32,19 @@ export function RatingDialog({
 
   // Reset form when dialog opens/closes or old rating changes
   useEffect(() => {
-    if (!open || !rating) return;
+    if (!openState || !rating) return;
     setSelectedRating(rating);
-  }, [open, rating]);
+  }, [openState, rating]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!rating) return;
     onSave({ ...entry, rating: selectedRating });
-    onOpenChange(false);
+    setOpenState(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={openState} onOpenChange={setOpenState}>
       <DialogContent className="sm:max-w-[320px]">
         <DialogHeader>
           <DialogTitle>
@@ -65,7 +65,7 @@ export function RatingDialog({
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={() => setOpenState(false)}
             >
               Cancel
             </Button>
