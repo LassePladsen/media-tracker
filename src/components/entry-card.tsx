@@ -4,7 +4,7 @@ import { watchStatusColors, watchStatuses } from "@/data/media";
 import { updateEntry } from "@/lib/media-entry";
 import { WatchStatus } from "@/types/media";
 import { MediaEntry } from "../types/media";
-import EntryStatusIcon from "./entry-status-icon";
+import EntryStatusIcon from "./ui/entry-status-icon";
 import { RatingDialog } from "./rating-dialog";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
