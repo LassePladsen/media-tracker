@@ -75,9 +75,9 @@ export default function Entrycard({
               <div className="flex flex-wrap gap-2">
                 <Badge
                   variant="outline"
-                  className={watchStatusColors[entry.status as WatchStatus]}
+                  className={watchStatusColors[entry.status]}
                 >
-                  {watchStatuses[entry.status as WatchStatus]}
+                  {watchStatuses[entry.status]}
                 </Badge>
                 <Badge variant="secondary">{entry.genre}</Badge>
                 <Badge variant="secondary">{entry.year}</Badge>
