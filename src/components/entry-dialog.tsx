@@ -125,7 +125,7 @@ export function EntryDialog({
                   id="genre"
                   value={genre}
                   onChange={(e) => setGenre(e.target.value)}
-                  placeholder="e.g., Action"
+                  placeholder="e.g. Action"
                   required
                 />
               </div>
@@ -180,7 +180,7 @@ export function EntryDialog({
                   step="1"
                   value={episodesWatched}
                   onChange={(e) => setEpisodesWatched(e.target.value)}
-                  placeholder="e.g., 5"
+                  placeholder="e.g. 5"
                 />
               </div>
             </div>
@@ -196,7 +196,7 @@ export function EntryDialog({
                 step="0.5"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
-                placeholder="e.g., 8.5"
+                placeholder="e.g. 8.5"
               />
               <p className="text-xs text-muted-foreground">
                 Enter a rating between 0.5 and 10.0
