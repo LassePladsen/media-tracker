@@ -92,7 +92,8 @@ export default function Entrycard({
       <Card
         className={
           "hover:shadow-lg transition-all hover:border-primary cursor-pointer " +
-          (smallMode ? "p-2 scale-98 hover:scale-100" : "p-3 hover:scale-105")
+          // (smallMode ? "px-4 py-2 scale-98 hover:scale-100" : "py-3 px-4 scale-98 hover:scale-103") // Increase size on hover
+          (smallMode ? "px-4 py-2" : "py-3 px-4") 
         }
         onClick={onClick}
       >
