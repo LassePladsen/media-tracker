@@ -7,8 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "format": "prettier src --write",
+    "tsc": "tsc --noEmit --pretty",
     "lint": "eslint src",
-    "check": "eslint src",
     "fix": "eslint src --fix",
     "prepare": "husky"
   },
