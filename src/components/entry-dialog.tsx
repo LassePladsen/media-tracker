@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { mediaTypeLabels } from "@/data/media";
+import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaType, WatchStatus } from "../types/media";
 import { Button } from "./ui/button";
 import {
@@ -20,13 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-
-const statusOptions: { value: Exclude<WatchStatus, "all">; label: string }[] = [
-  { value: "plan-to-watch", label: "Plan to Watch" },
-  { value: "completed", label: "Completed" },
-  { value: "on-hold", label: "On Hold" },
-  { value: "dropped", label: "Dropped" },
-];
 
 export interface EntryDialogProps {
   open: boolean;
@@ -151,7 +144,7 @@ export function EntryDialog({
               </div>
             </div>
 
-            {/* ROW: watch status and episode count */}
+            {/* ROW: watch status and episodes watched */}
             <div className="grid grid-cols-2 gap-4">
               {/* Watch status */}
               <div className="space-y-2">
@@ -166,20 +159,20 @@ export function EntryDialog({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {statusOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
+                    {Object.entries(watchStatuses)
+                      .filter(([status]) => status !== "all")
+                      .map(([status, label]) => (
+                        <SelectItem key={status} value={status}>
+                          {label}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Episode count */}
+              {/* Episodes watched */}
               <div className="space-y-2">
-                <Label htmlFor="episodes-watched">
-                  Episode count (optional)
-                </Label>
+                <Label htmlFor="episodes-watched">Watched Episodes</Label>
                 <Input
                   id="episodes-watched"
                   type="number"
