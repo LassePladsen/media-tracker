@@ -72,6 +72,7 @@ Wishlist of potential extra features:
 - [] White / dark mode?
 - [] Color style. E.g default nextjs neat black/white vs the figma dock purple-based theme.
 - [] Demo showcase on the github project, for example either using dummy data hardcoded for demo or using a demo user in db (this wont work well because any demo tester could mess up the data for next person. Solution is to create a new demo user for each tester. I dont like this approach cause it will need automatic cleanup logic).
+- [] Action user feedback: Popup dialog slides in and out after a timeout to show what happened, e.g. "Saved movie" "Set status to watching"
 
 ## Database structure
 - [] Table: list / (media) Type.

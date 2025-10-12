@@ -20,8 +20,6 @@ import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { updateEntry, addEntry } from "@/lib/media-entry";
 
-type MediaEntryWithoutId = Omit<MediaEntry, "id">;
-
 export default function ListPage({
   params,
 }: {
@@ -33,7 +31,7 @@ export default function ListPage({
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<WatchStatus | "all">(
-    "all",
+    "plan-to-watch",
   );
   const [selectedGenre, setSelectedGenre] = useState<string>("all"); // TODO:
   const [selectedYear, setSelectedYear] = useState<string>("all"); // TODO:
@@ -41,7 +39,6 @@ export default function ListPage({
   const [showEntryDialog, setShowEntryDialog] = useState(false); // TODO:
   const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
 
-  // TODO: handlers. these are from ai example as of now. LP 2025-10-05
   const handleOpenAddDialog = () => {
     setEditingEntry(null);
     setShowEntryDialog(true);
@@ -52,7 +49,7 @@ export default function ListPage({
     setShowEntryDialog(true);
   };
 
-  const handleSaveEntry = (entryData: MediaEntryWithoutId) => {
+  const handleSaveEntry = (entryData: Omit<MediaEntry, "id">) => {
     if (editingEntry) {
       updateEntry(editingEntry.id, entryData);
     } else {
