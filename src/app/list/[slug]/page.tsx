@@ -62,7 +62,7 @@ export default function ListPage({
     return uniqueYears;
   }, [list.entries]);
 
-  // Configuration states from url params
+  // Filtering states from url params
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "");
   const [selectedStatus, setSelectedStatus] = useState<WatchStatus | "all">(
@@ -72,15 +72,15 @@ export default function ListPage({
   );
   const [selectedGenre, setSelectedGenre] = useState<string>(
     getSafeSearchParam("genre", defaultGenre, genres),
-  ); // TODO:
+  );
   const [selectedYear, setSelectedYear] = useState<string>(
     getSafeSearchParam("year", defaultYear, years),
-  ); // TODO:
+  );
   const [isSmallCards, setIsSmallCards] = useState(
     !!Number(getSafeSearchParam("small", Number(defaultSmallMode).toString())),
   );
 
-  // Filter entries
+  // Create entries from current filter
   const filteredEntries = useMemo(() => {
     return list.entries.filter((entry) => {
       const matchesSearch = entry.title
@@ -137,19 +137,17 @@ export default function ListPage({
     searchParams,
   ]);
 
+  // States and functions for entry edit/add
   const [showEntryDialog, setShowEntryDialog] = useState(false); // TODO:
   const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
-
   const handleOpenAddDialog = () => {
     setEditingEntry(null);
     setShowEntryDialog(true);
   };
-
   const openEntryEdit = (entry: MediaEntry) => {
     setEditingEntry(entry);
     setShowEntryDialog(true);
   };
-
   const handleSaveEntry = (entryData: Omit<MediaEntry, "id">) => {
     if (editingEntry) {
       updateEntry(editingEntry.id, entryData);
