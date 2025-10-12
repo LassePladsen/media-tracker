@@ -1,4 +1,4 @@
-import { MonitorPlay, Repeat, SquareCheckBig } from "lucide-react";
+import { IterationCw, Play, SquareCheckBig } from "lucide-react";
 
 import { watchStatusColors } from "@/data/media";
 import { WatchStatus } from "@/types/media";
@@ -16,21 +16,6 @@ export default function EntryStatusIcon({
   const classes =
     "w-5 h-5 text-muted-foreground hover:scale-125 hover:cursor-pointer ";
   switch (status) {
-    case "plan-to-watch": // Click to start watching
-      return (
-        <MonitorPlay
-          className={
-            classes +
-            (watchStatusColors.fg["watching"]
-              ? `hover:${watchStatusColors.fg["watching"]}`
-              : "")
-          }
-          onClick={(e) => {
-            e.stopPropagation();
-            handleChangeStatus("watching");
-          }}
-        />
-      );
     case "watching": // click to complete
       return (
         <SquareCheckBig
@@ -46,9 +31,26 @@ export default function EntryStatusIcon({
           }}
         />
       );
+
     case "completed": // click to rewatch
       return (
-        <Repeat
+        <IterationCw
+          className={
+            classes +
+            (watchStatusColors.fg["rewatching"]
+              ? `hover:${watchStatusColors.fg["rewatching"]}`
+              : "")
+          }
+          onClick={(e) => {
+            e.stopPropagation();
+            handleChangeStatus("rewatching");
+          }}
+        />
+      );
+
+    default: // Click to start / resume watching
+      return (
+        <Play
           className={
             classes +
             (watchStatusColors.fg["watching"]

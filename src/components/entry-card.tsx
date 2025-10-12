@@ -66,18 +66,18 @@ export default function Entrycard({
                   {entry.episodesWatched}
                 </div>
               )*/}
+              <EntryStatusIcon
+                status={entry.status}
+                handleChangeStatus={changeEntryStatus}
+              />
+            </div>
+            <div className="flex flex-row gap-3">
               {entry.rating && (
                 <RatingStar
                   rating={entry.rating}
                   onClick={() => setShowRatingDialog(true)}
                 />
               )}
-            </div>
-            <div className="flex flex-row gap-3">
-              <EntryStatusIcon
-                status={entry.status}
-                handleChangeStatus={changeEntryStatus}
-              />
             </div>
           </div>
 

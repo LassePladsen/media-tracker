@@ -106,7 +106,7 @@ export const dummyData: MediaData = {
       {
         id: "s1",
         title: "Breaking Bad",
-        status: "completed",
+        status: "rewatching",
         genre: "Crime",
         year: 2008,
         rating: 10,
