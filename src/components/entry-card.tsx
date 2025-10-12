@@ -3,11 +3,12 @@ import { useCallback, useState } from "react";
 import { watchStatusColors, watchStatuses } from "@/data/media";
 import { updateEntry } from "@/lib/media-entry";
 import { WatchStatus } from "@/types/media";
+import { Bookmark } from "lucide-react";
 import { MediaEntry } from "../types/media";
-import EntryStatusIcon from "./ui/entry-status-icon";
 import { RatingDialog } from "./rating-dialog";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
+import EntryStatusIcon from "./ui/entry-status-icon";
 import RatingStar from "./ui/rating-star";
 
 export interface EntryCardProps {
@@ -58,7 +59,15 @@ export default function Entrycard({
               (smallMode ? "items-center" : "items-start")
             }
           >
-            <h3 className="flex-1">{entry.title}</h3>
+            <div className="flex flex-row gap-3 justify-start">
+              <h3 className="flex-1">{entry.title}</h3>
+              {entry.episodesWatched && (
+                <div className="flex flex-row items-center text-muted-foreground">
+                  <Bookmark size={17} />
+                  {entry.episodesWatched}
+                </div>
+              )}
+            </div>
             <div className="flex flex-row gap-3">
               {entry.rating && smallMode && (
                 <RatingStar
