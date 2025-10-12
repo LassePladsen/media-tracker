@@ -48,6 +48,25 @@ export default function RatingStarRow({
     return "empty";
   };
 
+  /* Number above selected or hovered star, with timeout to fix hover-stutter with mouse */
+  function RatingNumber({
+    className,
+    number,
+  }: {
+    className?: string;
+    number: number;
+  }) {
+    const ratingNumber = hover || rating;
+    const showRatingNumber =
+      !!ratingNumber &&
+      (ratingNumber === number + 1 || ratingNumber === number + 0.5);
+    return (
+      <div className={className}>
+        {showRatingNumber && ratingNumber.toFixed(1)}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={"flex gap-1 " + className}>
@@ -56,12 +75,12 @@ export default function RatingStarRow({
 
           return (
             <div className="flex flex-col">
-              <div className="h-6 font-bold">
-                {/* Hover text, same place for both sides of half - top center of star. */}
-                {!!hover &&
-                  (hover === i + 1 || hover === i + 0.5) &&
-                  hover.toFixed(1)}
-              </div>
+              {/* Show current rating above the selected OR hovered star */}
+              <RatingNumber
+                className="h-6 font-bold transition-all"
+                number={i}
+              />
+
               <div key={i} className="relative">
                 {/* Left half */}
                 <div
