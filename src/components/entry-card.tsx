@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import { watchStatusColors, watchStatuses } from "@/data/media";
 import { updateEntry } from "@/lib/media-entry";
 import { WatchStatus } from "@/types/media";
-import { Bookmark } from "lucide-react";
 import { MediaEntry } from "../types/media";
 import { RatingDialog } from "./rating-dialog";
 import { Badge } from "./ui/badge";
@@ -61,20 +60,20 @@ export default function Entrycard({
           >
             <div className="flex flex-row gap-3 justify-start">
               <h3 className="flex-1">{entry.title}</h3>
-              {entry.episodesWatched && (
+              {/*entry.episodesWatched && (
                 <div className="flex flex-row items-center text-muted-foreground">
                   <Bookmark size={17} />
                   {entry.episodesWatched}
                 </div>
-              )}
-            </div>
-            <div className="flex flex-row gap-3">
-              {entry.rating && smallMode && (
+              )*/}
+              {entry.rating && (
                 <RatingStar
                   rating={entry.rating}
                   onClick={() => setShowRatingDialog(true)}
                 />
               )}
+            </div>
+            <div className="flex flex-row gap-3">
               <EntryStatusIcon
                 status={entry.status}
                 handleChangeStatus={changeEntryStatus}
@@ -96,12 +95,6 @@ export default function Entrycard({
                 <Badge variant="secondary">{entry.genre}</Badge>
                 <Badge variant="secondary">{entry.year}</Badge>
               </div>
-              {entry.rating && (
-                <RatingStar
-                  rating={entry.rating}
-                  onClick={() => setShowRatingDialog(true)}
-                />
-              )}
             </div>
           )}
         </div>
