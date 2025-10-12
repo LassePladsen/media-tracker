@@ -224,8 +224,8 @@ export default function ListPage({
       </div>
 
       <EntryDialog
-        open={showEntryDialog}
-        onOpenChange={setShowEntryDialog}
+        openState={showEntryDialog}
+        setOpenState={setShowEntryDialog}
         onSave={handleSaveEntry}
         entry={editingEntry}
         mediaType={list.type}

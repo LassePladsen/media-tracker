@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { updateEntry } from "@/lib/media-entry";
 import { MediaEntry } from "../types/media";
 import RatingStarRow from "./rating-star-row";
 import { Button } from "./ui/button";
@@ -56,11 +55,8 @@ export function RatingDialog({
 
         <form onSubmit={handleSubmit} className="pb-4 flex flex-col gap-5">
           <RatingStarRow
-            className="-mt-3"
-            initialRating={entry.rating}
-            onChange={(rating) =>
-              updateEntry(entry.id, { ...entry, rating: rating })
-            }
+            rating={selectedRating}
+            setRating={setSelectedRating}
           />
           {/*<DialogFooter className="flex-col-reverse sm:flex-col-reverse justify-center sm:justify-center">*/}
           <DialogFooter>

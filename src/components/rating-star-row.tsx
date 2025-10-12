@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 
 type StarFill = "empty" | "half" | "full";
 
 export interface RatingStarRowProps {
-  initialRating?: number;
-  onChange?: (rating: number) => void;
+  rating?: number;
+  setRating: Dispatch<SetStateAction<number | undefined>>;
 }
 
 /** 
@@ -13,17 +13,16 @@ Row of ten rating star buttons where you can click each half for a half rating
 This is all by Claude so don't judge me, my attempt didn't even work
 */
 export default function RatingStarRow({
-  initialRating = 0,
-  onChange,
+  rating,
+  setRating,
 }: RatingStarRowProps) {
-  const [rating, setRating] = useState<number>(initialRating);
   const [hover, setHover] = useState<number>(0);
   const hoverTimeoutRef = useRef<number | null>(null);
 
   const handleClick = (value: number): void => {
     setRating(value);
-    if (onChange) {
-      onChange(value);
+    if (setRating) {
+      setRating(value);
     }
   };
 
@@ -59,7 +58,7 @@ export default function RatingStarRow({
   }, []);
 
   const getStarFill = (starIndex: number): StarFill => {
-    const currentRating = hover || rating;
+    const currentRating = hover || rating || 0;
     const starValue = starIndex + 1;
 
     if (currentRating >= starValue) {

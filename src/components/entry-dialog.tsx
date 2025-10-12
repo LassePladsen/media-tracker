@@ -23,73 +23,82 @@ import {
 import RatingStarRow from "./rating-star-row";
 
 export interface EntryDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  openState: boolean;
+  setOpenState: (open: boolean) => void;
   onSave: (entryData: Omit<MediaEntry, "id">) => void;
   entry?: MediaEntry | null;
   mediaType: MediaType;
 }
 
 export function EntryDialog({
-  open,
-  onOpenChange,
+  openState,
+  setOpenState,
   onSave,
   entry,
   mediaType,
 }: EntryDialogProps) {
-  const [title, setTitle] = useState("");
-  const [genre, setGenre] = useState("");
-  const [year, setYear] = useState("");
-  const [episodesWatched, setEpisodesWatched] = useState("");
+  const [title, setTitle] = useState<MediaEntry["title"] | undefined>(
+    undefined,
+  );
+  const [genre, setGenre] = useState<MediaEntry["genre"] | undefined>(
+    undefined,
+  );
+  const [year, setYear] = useState<MediaEntry["year"] | undefined>(undefined);
+  const [episodesWatched, setEpisodesWatched] = useState<
+    MediaEntry["episodesWatched"] | undefined
+  >(undefined);
   const [status, setStatus] =
     useState<Exclude<WatchStatus, "all">>("plan-to-watch");
-  const [rating, setRating] = useState("");
+  const [rating, setRating] = useState<MediaEntry["rating"] | undefined>(
+    undefined,
+  );
 
   const isEditMode = !!entry;
 
   // Reset form when dialog opens/closes or entry changes
   useEffect(() => {
-    if (open) {
+    if (openState) {
       if (entry) {
         setTitle(entry.title);
         setGenre(entry.genre);
-        setYear(entry.year.toString());
-        setEpisodesWatched(entry.episodesWatched?.toString() || "");
+        setYear(entry.year);
+        setEpisodesWatched(entry.episodesWatched);
         setStatus(entry.status);
-        setRating(entry.rating?.toString() || "");
+        setRating(entry.rating);
       } else {
         setTitle("");
         setGenre("");
-        setYear(new Date().getFullYear().toString());
-        setEpisodesWatched("");
+        setYear(new Date().getFullYear());
+        setEpisodesWatched(undefined);
         setStatus("plan-to-watch");
-        setRating("");
+        setRating(undefined);
       }
     }
-  }, [open, entry]);
+  }, [openState, entry]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title.trim() || !genre.trim() || !year.trim()) {
+    if (!title || !genre || !year) {
       return;
     }
 
     const entry: Omit<MediaEntry, "id"> = {
       title: title.trim(),
       genre: genre.trim(),
-      year: parseInt(year),
+      year: year,
       status,
-      rating: rating ? parseFloat(rating) : undefined,
+      rating: rating,
+      episodesWatched: episodesWatched,
     };
 
     onSave(entry);
-    onOpenChange(false);
+    setOpenState(false);
   };
 
   const mediaTypeLabel = mediaTypeLabels[mediaType];
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={openState} onOpenChange={setOpenState}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>
@@ -138,7 +147,7 @@ export function EntryDialog({
                   id="year"
                   type="number"
                   value={year}
-                  onChange={(e) => setYear(e.target.value)}
+                  onChange={(e) => setYear(Number(e.target.value))}
                   placeholder="2024"
                   required
                 />
@@ -180,16 +189,24 @@ export function EntryDialog({
                   min="0"
                   step="1"
                   value={episodesWatched}
-                  onChange={(e) => setEpisodesWatched(e.target.value)}
+                  onChange={(e) => setEpisodesWatched(Number(e.target.value))}
                   placeholder="e.g. 5"
                 />
               </div>
             </div>
 
             {/* Rating stars */}
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                setRating(undefined);
+              }}
+            >
+              Reset rating
+            </Button>
             <RatingStarRow
-              initialRating={Number(rating)}
-              onChange={(rating) => setRating(rating.toString())}
+              rating={Number(rating)}
+              setRating={(rating) => setRating(rating)}
             />
           </div>
 
@@ -198,7 +215,7 @@ export function EntryDialog({
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={() => setOpenState(false)}
             >
               Cancel
             </Button>
