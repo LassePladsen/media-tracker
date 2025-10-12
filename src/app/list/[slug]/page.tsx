@@ -1,7 +1,8 @@
 "use client";
+
 import { ArrowDown10, Funnel, Minimize2, Plus, Search } from "lucide-react";
-import { notFound } from "next/navigation";
-import { use, useMemo, useState } from "react";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
+import { use, useMemo, useState, useEffect } from "react";
 
 import EntryCard from "@/components/entry-card";
 import { EntryDialog } from "@/components/entry-dialog";
@@ -29,13 +30,61 @@ export default function ListPage({
   const list: MediaList | undefined = dummyData[slug];
   if (!list) notFound();
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "");
   const [selectedStatus, setSelectedStatus] = useState<WatchStatus | "all">(
-    "plan-to-watch",
+    (searchParams.get("status") as WatchStatus | "all") ?? "plan-to-watch",
   );
-  const [selectedGenre, setSelectedGenre] = useState<string>("all"); // TODO:
-  const [selectedYear, setSelectedYear] = useState<string>("all"); // TODO:
-  const [isSmallCards, setIsSmallCards] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState<string>(
+    searchParams.get("genre") ?? "all",
+  ); // TODO:
+  const [selectedYear, setSelectedYear] = useState<string>(
+    searchParams.get("year") ?? "all",
+  ); // TODO:
+  const [isSmallCards, setIsSmallCards] = useState(
+    searchParams.get("small") === null ? false : true,
+  );
+
+  const router = useRouter();
+
+  // Sync local state to URL. Use router.replace so we don't push history on every change.
+  useEffect(() => {
+    const next = new URLSearchParams(searchParams?.toString() ?? "");
+
+    if (searchQuery) next.set("q", searchQuery);
+    else next.delete("q");
+
+    if (selectedStatus && selectedStatus !== "plan-to-watch")
+      next.set("status", selectedStatus);
+    else next.delete("status");
+
+    if (selectedGenre && selectedGenre !== "all")
+      next.set("genre", selectedGenre);
+    else next.delete("genre");
+
+    if (selectedYear && selectedYear !== "all") next.set("year", selectedYear);
+    else next.delete("year");
+
+    if (isSmallCards) next.set("small", "1");
+    else next.delete("small");
+
+    const current = searchParams?.toString() ?? "";
+    const nextStr = next.toString();
+
+    if (current !== nextStr) {
+      router.replace(`?${nextStr}`);
+    }
+  }, [
+    searchQuery,
+    selectedStatus,
+    selectedGenre,
+    selectedYear,
+    isSmallCards,
+    router,
+    searchParams,
+  ]);
+
   const [showEntryDialog, setShowEntryDialog] = useState(false); // TODO:
   const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
 
