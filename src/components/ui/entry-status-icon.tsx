@@ -1,4 +1,4 @@
-import { BookmarkCheck, Play, Repeat } from "lucide-react";
+import { MonitorPlay, Repeat, SquareCheckBig } from "lucide-react";
 
 import { watchStatusColors } from "@/data/media";
 import { WatchStatus } from "@/types/media";
@@ -18,7 +18,7 @@ export default function EntryStatusIcon({
   switch (status) {
     case "plan-to-watch": // Click to start watching
       return (
-        <Play
+        <MonitorPlay
           className={
             classes +
             (watchStatusColors.fg["watching"]
@@ -33,7 +33,7 @@ export default function EntryStatusIcon({
       );
     case "watching": // click to complete
       return (
-        <BookmarkCheck
+        <SquareCheckBig
           className={
             classes +
             (watchStatusColors.fg["completed"]
