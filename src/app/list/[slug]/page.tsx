@@ -21,6 +21,11 @@ import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { updateEntry, addEntry } from "@/lib/media-entry";
 
+const defaultStatus: WatchStatus | "all" = "plan-to-watch";
+const defaultGenre: string = "all";
+const defaultYear: string = "all";
+const defaultSmallMode: boolean = false;
+
 const getSafeSearchParam = (
   param: string,
   defaultValue: string = "",
@@ -57,23 +62,22 @@ export default function ListPage({
     return uniqueYears;
   }, [list.entries]);
 
+  // Configuration states from url params
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "");
   const [selectedStatus, setSelectedStatus] = useState<WatchStatus | "all">(
-    getSafeSearchParam(
-      "status",
-      "plan-to-watch",
-      Object.keys(watchStatuses),
-    ) as WatchStatus | "all",
+    getSafeSearchParam("status", defaultStatus, Object.keys(watchStatuses)) as
+      | WatchStatus
+      | "all",
   );
   const [selectedGenre, setSelectedGenre] = useState<string>(
-    getSafeSearchParam("genre", "all", genres),
+    getSafeSearchParam("genre", defaultGenre, genres),
   ); // TODO:
   const [selectedYear, setSelectedYear] = useState<string>(
-    getSafeSearchParam("year", "all", years),
+    getSafeSearchParam("year", defaultYear, years),
   ); // TODO:
   const [isSmallCards, setIsSmallCards] = useState(
-    !!Number(getSafeSearchParam("small", "0")),
+    !!Number(getSafeSearchParam("small", Number(defaultSmallMode).toString())),
   );
 
   // Filter entries
@@ -102,15 +106,16 @@ export default function ListPage({
     if (searchQuery) next.set("q", searchQuery);
     else next.delete("q");
 
-    if (selectedStatus && selectedStatus !== "plan-to-watch")
+    if (selectedStatus && selectedStatus !== defaultStatus)
       next.set("status", selectedStatus);
     else next.delete("status");
 
-    if (selectedGenre && selectedGenre !== "all")
+    if (selectedGenre && selectedGenre !== defaultGenre)
       next.set("genre", selectedGenre);
     else next.delete("genre");
 
-    if (selectedYear && selectedYear !== "all") next.set("year", selectedYear);
+    if (selectedYear && selectedYear !== defaultYear)
+      next.set("year", selectedYear);
     else next.delete("year");
 
     if (isSmallCards) next.set("small", "1");
