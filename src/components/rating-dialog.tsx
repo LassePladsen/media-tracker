@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { updateEntry } from "@/lib/media-entry";
 import { MediaEntry } from "../types/media";
-import RatingStars from "./rating-star-row";
+import RatingStarRow from "./rating-star-row";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -55,7 +55,7 @@ export function RatingDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="pb-4 flex flex-col gap-5">
-          <RatingStars
+          <RatingStarRow
             className="-mt-3"
             initialRating={entry.rating}
             onChange={(rating) =>
