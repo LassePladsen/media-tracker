@@ -72,7 +72,7 @@ export default function RatingStarRow({
     return "empty";
   };
 
-  /* Number above selected or hovered star, with timeout to fix hover-stutter with mouse */
+  /* Number above selected or hovered star */
   function RatingNumber({
     className,
     number,
@@ -104,7 +104,7 @@ export default function RatingStarRow({
             <div className="relative">
               {/* Left half */}
               <div
-                className="absolute top-0 left-0 w-1/2 h-full cursor-pointer z-10"
+                className="absolute top-0 left-0 w-1/2 pl-1 h-full cursor-pointer z-10"
                 onMouseEnter={() => handleMouseEnter(i + 0.5)}
                 onMouseLeave={handleMouseLeave}
                 onClick={(e) => {
@@ -115,7 +115,7 @@ export default function RatingStarRow({
 
               {/* Right half */}
               <div
-                className="absolute top-0 right-0 w-1/2 h-full cursor-pointer z-10"
+                className="absolute top-0 right-0 w-1/2 h-full cursor-pointer z-10 pr-1"
                 onMouseEnter={() => handleMouseEnter(i + 1)}
                 onMouseLeave={handleMouseLeave}
                 onClick={(e) => {
