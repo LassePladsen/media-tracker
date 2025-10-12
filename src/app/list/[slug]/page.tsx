@@ -21,6 +21,18 @@ import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
 import { updateEntry, addEntry } from "@/lib/media-entry";
 
+const getSafeSearchParam = (
+  param: string,
+  defaultValue: string = "",
+  verifyArray?: Array<string>,
+): string => {
+  const searchParams = useSearchParams();
+  const value = searchParams.get(param) ?? defaultValue;
+
+  if (verifyArray) return verifyArray.includes(value) ? value : defaultValue;
+  return value;
+};
+
 export default function ListPage({
   params,
 }: {
@@ -30,21 +42,56 @@ export default function ListPage({
   const list: MediaList | undefined = dummyData[slug];
   if (!list) notFound();
 
-  const searchParams = useSearchParams();
+  // Get unique genres and years for filters
+  const genres = useMemo(() => {
+    const uniqueGenres = Array.from(
+      new Set(list.entries.map((e) => e.genre)),
+    ).sort();
+    return uniqueGenres;
+  }, [list.entries]);
 
+  const years = useMemo(() => {
+    const uniqueYears = Array.from(new Set(list.entries.map((e) => e.year)))
+      .sort((a, b) => b - a)
+      .map((year) => year.toString());
+    return uniqueYears;
+  }, [list.entries]);
+
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "");
   const [selectedStatus, setSelectedStatus] = useState<WatchStatus | "all">(
-    (searchParams.get("status") as WatchStatus | "all") ?? "plan-to-watch",
+    getSafeSearchParam(
+      "status",
+      "plan-to-watch",
+      Object.keys(watchStatuses),
+    ) as WatchStatus | "all",
   );
   const [selectedGenre, setSelectedGenre] = useState<string>(
-    searchParams.get("genre") ?? "all",
+    getSafeSearchParam("genre", "all", genres),
   ); // TODO:
   const [selectedYear, setSelectedYear] = useState<string>(
-    searchParams.get("year") ?? "all",
+    getSafeSearchParam("year", "all", years),
   ); // TODO:
   const [isSmallCards, setIsSmallCards] = useState(
-    searchParams.get("small") === null ? false : true,
+    !!Number(getSafeSearchParam("small", "0")),
   );
+
+  // Filter entries
+  const filteredEntries = useMemo(() => {
+    return list.entries.filter((entry) => {
+      const matchesSearch = entry.title
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const matchesStatus =
+        selectedStatus === "all" || entry.status === selectedStatus;
+      const matchesGenre =
+        selectedGenre === "all" || entry.genre === selectedGenre;
+      const matchesYear =
+        selectedYear === "all" || entry.year.toString() === selectedYear;
+
+      return matchesSearch && matchesStatus && matchesGenre && matchesYear;
+    });
+  }, [list.entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
 
   const router = useRouter();
 
@@ -105,38 +152,6 @@ export default function ListPage({
       addEntry(entryData);
     }
   };
-
-  // Get unique genres and years for filters
-  const genres = useMemo(() => {
-    const uniqueGenres = Array.from(
-      new Set(list.entries.map((e) => e.genre)),
-    ).sort();
-    return uniqueGenres;
-  }, [list.entries]);
-
-  const years = useMemo(() => {
-    const uniqueYears = Array.from(
-      new Set(list.entries.map((e) => e.year)),
-    ).sort((a, b) => b - a);
-    return uniqueYears;
-  }, [list.entries]);
-
-  // Filter entries
-  const filteredEntries = useMemo(() => {
-    return list.entries.filter((entry) => {
-      const matchesSearch = entry.title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
-      const matchesStatus =
-        selectedStatus === "all" || entry.status === selectedStatus;
-      const matchesGenre =
-        selectedGenre === "all" || entry.genre === selectedGenre;
-      const matchesYear =
-        selectedYear === "all" || entry.year.toString() === selectedYear;
-
-      return matchesSearch && matchesStatus && matchesGenre && matchesYear;
-    });
-  }, [list.entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
 
   const filterIconClasses = "w-4 h-4 text-muted-foreground";
 
@@ -215,7 +230,7 @@ export default function ListPage({
           <SelectContent>
             <SelectItem value="all">All Years</SelectItem>
             {years.map((year) => (
-              <SelectItem key={year} value={year.toString()}>
+              <SelectItem key={year} value={year}>
                 {year}
               </SelectItem>
             ))}
