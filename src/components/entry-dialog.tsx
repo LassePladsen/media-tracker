@@ -195,15 +195,6 @@ export function EntryDialog({
               </div>
             </div>
 
-            {/* Rating stars */}
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                setRating(undefined);
-              }}
-            >
-              Reset rating
-            </Button>
             <RatingStarRow
               rating={Number(rating)}
               setRating={(rating) => setRating(rating)}
@@ -212,6 +203,14 @@ export function EntryDialog({
 
           {/* Buttons */}
           <DialogFooter>
+            {/* Rating stars */}
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setRating(undefined)}
+            >
+              Reset rating
+            </Button>
             <Button
               type="button"
               variant="outline"

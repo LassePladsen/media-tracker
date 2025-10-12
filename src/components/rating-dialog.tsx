@@ -60,6 +60,15 @@ export function RatingDialog({
           />
           {/*<DialogFooter className="flex-col-reverse sm:flex-col-reverse justify-center sm:justify-center">*/}
           <DialogFooter>
+            {isEditMode && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setSelectedRating(undefined)}
+              >
+                Reset
+              </Button>
+            )}
             <Button
               type="button"
               variant="outline"
