@@ -6,7 +6,6 @@ type StarFill = "empty" | "half" | "full";
 export interface RatingStarRowProps {
   initialRating?: number;
   onChange?: (rating: number) => void;
-  className?: string;
 }
 
 /** 
@@ -16,7 +15,6 @@ This is all by Claude so don't judge me, my attempt didn't even work
 export default function RatingStarRow({
   initialRating = 0,
   onChange,
-  className,
 }: RatingStarRowProps) {
   const [rating, setRating] = useState<number>(initialRating);
   const [hover, setHover] = useState<number>(0);
@@ -92,7 +90,7 @@ export default function RatingStarRow({
   }
 
   return (
-    <div className={"flex gap-1 justify-center " + className}>
+    <div className="flex gap-1 justify-center -mt-3">
       {[...Array(10)].map((_, i) => {
         const starFill = getStarFill(i);
 

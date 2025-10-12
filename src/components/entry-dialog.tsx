@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import RatingStarRow from "./rating-star-row";
 
 export interface EntryDialogProps {
   open: boolean;
@@ -185,23 +186,11 @@ export function EntryDialog({
               </div>
             </div>
 
-            {/* Rating */}
-            <div className="space-y-2">
-              <Label htmlFor="rating">Rating</Label>
-              <Input
-                id="rating"
-                type="number"
-                min="0.5"
-                max="10"
-                step="0.5"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-                placeholder="e.g. 8.5"
-              />
-              <p className="text-xs text-muted-foreground">
-                Enter a rating between 0.5 and 10.0
-              </p>
-            </div>
+            {/* Rating stars */}
+            <RatingStarRow
+              initialRating={Number(rating)}
+              onChange={(rating) => setRating(rating.toString())}
+            />
           </div>
 
           {/* Buttons */}
