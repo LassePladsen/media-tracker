@@ -92,71 +92,66 @@ export default function RatingStarRow({
   }
 
   return (
-    <div>
-      <div className={"flex gap-1 " + className}>
-        {[...Array(10)].map((_, i) => {
-          const starFill = getStarFill(i);
+    <div className={"flex gap-1 justify-center " + className}>
+      {[...Array(10)].map((_, i) => {
+        const starFill = getStarFill(i);
 
-          return (
-            <div key={i} className="flex flex-col">
-              {/* Show current rating above the selected OR hovered star */}
-              <RatingNumber
-                className="h-6 font-bold transition-all"
-                number={i}
+        return (
+          <div key={i} className="flex flex-col">
+            {/* Show current rating above the selected OR hovered star */}
+            <RatingNumber className="h-6 font-bold w-1" number={i} />
+
+            <div className="relative">
+              {/* Left half */}
+              <div
+                className="absolute top-0 left-0 w-1/2 h-full cursor-pointer z-10"
+                onMouseEnter={() => handleMouseEnter(i + 0.5)}
+                onMouseLeave={handleMouseLeave}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClick(i + 0.5);
+                }}
               />
 
-              <div className="relative">
-                {/* Left half */}
-                <div
-                  className="absolute top-0 left-0 w-1/2 h-full cursor-pointer z-10"
-                  onMouseEnter={() => handleMouseEnter(i + 0.5)}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClick(i + 0.5);
-                  }}
-                />
+              {/* Right half */}
+              <div
+                className="absolute top-0 right-0 w-1/2 h-full cursor-pointer z-10"
+                onMouseEnter={() => handleMouseEnter(i + 1)}
+                onMouseLeave={handleMouseLeave}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClick(i + 1);
+                }}
+              />
 
-                {/* Right half */}
-                <div
-                  className="absolute top-0 right-0 w-1/2 h-full cursor-pointer z-10"
-                  onMouseEnter={() => handleMouseEnter(i + 1)}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClick(i + 1);
-                  }}
-                />
+              {/* Star rendering with hover effect */}
+              <div
+                className={`relative transition-transform duration-200 ${
+                  hover > i && hover <= i + 1 ? "scale-110" : "scale-100"
+                }`}
+              >
+                {/* Outline on hover */}
+                {hover > i && hover <= i + 1 && (
+                  <Star className="absolute top-0 left-0 text-amber-400" />
+                )}
 
-                {/* Star rendering with hover effect */}
-                <div
-                  className={`relative transition-transform duration-200 ${
-                    hover > i && hover <= i + 1 ? "scale-110" : "scale-100"
-                  }`}
-                >
-                  {/* Outline on hover */}
-                  {hover > i && hover <= i + 1 && (
-                    <Star className="absolute top-0 left-0 text-amber-400" />
-                  )}
+                {/* Empty star background */}
+                <Star className="text-slate-300" />
 
-                  {/* Empty star background */}
-                  <Star className="text-slate-300" />
-
-                  {/* Filled portion */}
-                  {starFill !== "empty" && (
-                    <div
-                      className="absolute top-0 left-0 overflow-hidden"
-                      style={{ width: starFill === "half" ? "50%" : "100%" }}
-                    >
-                      <Star className="text-amber-400" fill="currentColor" />
-                    </div>
-                  )}
-                </div>
+                {/* Filled portion */}
+                {starFill !== "empty" && (
+                  <div
+                    className="absolute top-0 left-0 overflow-hidden"
+                    style={{ width: starFill === "half" ? "50%" : "100%" }}
+                  >
+                    <Star className="text-amber-400" fill="currentColor" />
+                  </div>
+                )}
               </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
