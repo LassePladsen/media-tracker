@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 
 type StarFill = "empty" | "half" | "full";
@@ -20,6 +20,7 @@ export default function RatingStarRow({
 }: RatingStarRowProps) {
   const [rating, setRating] = useState<number>(initialRating);
   const [hover, setHover] = useState<number>(0);
+  const hoverTimeoutRef = useRef<number | null>(null);
 
   const handleClick = (value: number): void => {
     setRating(value);
@@ -29,12 +30,35 @@ export default function RatingStarRow({
   };
 
   const handleMouseEnter = (value: number): void => {
+    // entering a new hover target: clear any pending timeout first
+    if (hoverTimeoutRef.current) {
+      window.clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
     setHover(value);
   };
 
   const handleMouseLeave = (): void => {
-    setHover(0);
+    // delay clearing hover slightly to make moving between halves/stars less jittery
+    if (hoverTimeoutRef.current) {
+      window.clearTimeout(hoverTimeoutRef.current);
+    }
+    // small timeout (120ms) gives user time to cross into adjacent interactive area
+    hoverTimeoutRef.current = window.setTimeout(() => {
+      setHover(0);
+      hoverTimeoutRef.current = null;
+    }, 120);
   };
+
+  // cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        window.clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const getStarFill = (starIndex: number): StarFill => {
     const currentRating = hover || rating;
@@ -74,14 +98,14 @@ export default function RatingStarRow({
           const starFill = getStarFill(i);
 
           return (
-            <div className="flex flex-col">
+            <div key={i} className="flex flex-col">
               {/* Show current rating above the selected OR hovered star */}
               <RatingNumber
                 className="h-6 font-bold transition-all"
                 number={i}
               />
 
-              <div key={i} className="relative">
+              <div className="relative">
                 {/* Left half */}
                 <div
                   className="absolute top-0 left-0 w-1/2 h-full cursor-pointer z-10"
