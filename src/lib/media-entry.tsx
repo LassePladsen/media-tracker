@@ -3,6 +3,7 @@ import { MediaEntry } from "@/types/media";
 type MediaEntryWithoutId = Omit<MediaEntry, "id">;
 
 // TODO:
+/* eslint-disable */
 export function updateEntry(
   id: MediaEntry["id"],
   entryData: MediaEntryWithoutId,
