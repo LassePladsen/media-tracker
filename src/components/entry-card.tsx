@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useState } from "react";
 
 import { watchStatusColors, watchStatuses } from "@/data/media";
@@ -13,7 +15,7 @@ import RatingStar from "./ui/rating-star";
 export interface EntryCardProps {
   entry: MediaEntry;
   onClick?: () => void;
-  smallMode: boolean;
+  smallMode?: boolean;
   showStatus?: boolean;
 }
 
