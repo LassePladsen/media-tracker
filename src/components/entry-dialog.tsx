@@ -181,18 +181,20 @@ export function EntryDialog({
               </div>
 
               {/* Episodes watched */}
-              <div className="space-y-2">
-                <Label htmlFor="episodes-watched">Watched Episodes</Label>
-                <Input
-                  id="episodes-watched"
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={episodesWatched}
-                  onChange={(e) => setEpisodesWatched(Number(e.target.value))}
-                  placeholder="e.g. 5"
-                />
-              </div>
+              {mediaType !== "movie" && (
+                <div className="space-y-2">
+                  <Label htmlFor="episodes-watched">Watched Episodes</Label>
+                  <Input
+                    id="episodes-watched"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={episodesWatched}
+                    onChange={(e) => setEpisodesWatched(Number(e.target.value))}
+                    placeholder="e.g. 5"
+                  />
+                </div>
+              )}
             </div>
 
             <RatingStarRow
