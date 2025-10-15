@@ -16,7 +16,7 @@ CREATE TYPE watch_status AS ENUM (
 
 CREATE TABLE IF NOT EXISTS list(
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    slug TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
     type media_type NOT NULL,
     title TEXT NOT NULL
 );
