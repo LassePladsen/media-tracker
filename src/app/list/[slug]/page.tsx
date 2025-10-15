@@ -262,7 +262,7 @@ export default function ListPage({
       </div>
 
       {/* Entries grid */}
-      <div className="flex-1 container self-center">
+      <div className="flex-1 container">
         {filteredEntries.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
             <p>No entries found</p>
