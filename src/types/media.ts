@@ -16,7 +16,6 @@ export interface MediaEntry {
   genre: string;
   year: number;
   rating?: number;
-  imageUrl?: string;
   episodesWatched?: number;
 }
 
