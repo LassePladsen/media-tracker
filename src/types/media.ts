@@ -1,4 +1,4 @@
-export type MediaType = "movies" | "tv" | "anime";
+export type MediaType = "movie" | "tv" | "anime";
 
 // The state of not started or added as entry would just be undefined / null. LP 2025-10-05
 export type WatchStatus =

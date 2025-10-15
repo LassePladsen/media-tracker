@@ -4,7 +4,7 @@ export const dummyData: MediaData = {
   movies: {
     id: 0,
     slug: "movies",
-    type: "movies",
+    type: "movie",
     title: "Movies",
     entries: [
       {

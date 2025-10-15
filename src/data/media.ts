@@ -40,7 +40,7 @@ export const mediaTypeLabels: Record<
   MediaType,
   Record<"singular" | "plural", string>
 > = {
-  movies: { singular: "Movie", plural: "Movies" },
+  movie: { singular: "Movie", plural: "Movies" },
   tv: { singular: "TV Show", plural: "TV Shows" },
   anime: { singular: "Anime", plural: "Anime" },
 };

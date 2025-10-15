@@ -21,7 +21,7 @@ export function MediaIcon({
   type: MediaType;
 }) {
   switch (type) {
-    case "movies":
+    case "movie":
       return <IconMovie {...rest} />;
 
     case "tv":
