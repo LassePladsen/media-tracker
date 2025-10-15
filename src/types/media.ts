@@ -17,6 +17,8 @@ export interface MediaEntry {
   year: number;
   rating?: number;
   episodesWatched?: number;
+  dateStarted?: Date;
+  dateEnded?: Date;
 }
 
 export interface MediaList {
