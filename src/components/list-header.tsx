@@ -3,9 +3,9 @@
 import { Home } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { ComponentProps, PropsWithChildren } from "react";
+import { ComponentProps, PropsWithChildren, useContext } from "react";
 
-import { dummyData } from "@/data/dummy-data";
+import { ListsContext } from "@/contexts/list";
 import { Button } from "./ui/button";
 import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import { MediaIcon } from "./ui/media-icon";
@@ -34,7 +34,7 @@ function HeaderButton({
 }
 
 export default function ListHeader() {
-  const lists = dummyData;
+  const lists = useContext(ListsContext);
   return (
     <ButtonGroup className="items-center w-full">
       <HeaderButton href="/">
@@ -42,8 +42,8 @@ export default function ListHeader() {
       </HeaderButton>
       <ButtonGroupSeparator />
       <ButtonGroup className="flex gap-3 pb-2 -mb-2 w-full">
-        {Object.entries(lists).map(([slug, list], index) => (
-          <HeaderButton href={slug} key={index}>
+        {lists.map((list, index) => (
+          <HeaderButton href={list.slug} key={index}>
             <MediaIcon type={list.type} className={HEADER_ICON_SIZE} />
             <span className="hidden header-sm:block">{list.title}</span>
           </HeaderButton>

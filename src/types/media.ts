@@ -27,7 +27,6 @@ export interface MediaList {
   slug: string;
   type: MediaType;
   title: string;
-  entries: MediaEntry[];
 }
 
 export type MediaData = Record<string, MediaList>;

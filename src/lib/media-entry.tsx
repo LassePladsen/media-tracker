@@ -1,12 +1,12 @@
 import { MediaEntry } from "@/types/media";
 
-type MediaEntryWithoutId = Omit<MediaEntry, "id">;
+type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
 
 // TODO:
 /* eslint-disable */
 export function updateEntry(
   id: MediaEntry["id"],
-  entryData: MediaEntryWithoutId,
+  entryData: MediaEntryWithoutIds,
 ) {}
 
-export function addEntry(entry: MediaEntryWithoutId) {}
+export function addEntry(entry: MediaEntryWithoutIds) {}

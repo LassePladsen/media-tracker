@@ -1,12 +1,12 @@
 // import { useState } from "react";
 import Link from "next/link";
-import { ComponentProps, PropsWithChildren } from "react";
+import { ComponentProps, PropsWithChildren, use } from "react";
 import { FaSearch } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MediaIcon } from "@/components/ui/media-icon";
-import { dummyData } from "@/data/dummy-data";
+import getLists from "@/db/list";
 
 function ListButton({
   href,
@@ -26,7 +26,7 @@ function ListButton({
 }
 
 export default function Home() {
-  const lists = dummyData;
+  const lists = use(getLists());
   // const [searchQuery, setSearchQuery] = useState("");
 
   // const handleSearch = (e: React.FormEvent) => {

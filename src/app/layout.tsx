@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import "./globals.css";
 import Footer from "@/components/footer";
+import { ListsContext } from "@/contexts/list";
+import getLists from "@/db/list";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,19 +22,22 @@ export const metadata: Metadata = {
     "Keep track of all your favorite movies, shows, and anime in one place",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const lists = await getLists();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
         <div className="min-h-screen flex flex-col font-sans">
-          {children}
-          <Footer />
+          <ListsContext.Provider value={lists}>
+            {children}
+            <Footer />
+          </ListsContext.Provider>
         </div>
       </body>
     </html>

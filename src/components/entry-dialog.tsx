@@ -22,10 +22,12 @@ import {
 } from "./ui/select";
 import RatingStarRow from "./rating-star-row";
 
+type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
+
 export interface EntryDialogProps {
   openState: boolean;
   setOpenState: (open: boolean) => void;
-  onSave: (entryData: Omit<MediaEntry, "id">) => void;
+  onSave: (entryData: MediaEntryWithoutIds) => void;
   entry?: MediaEntry | null;
   mediaType: MediaType;
 }
@@ -83,7 +85,7 @@ export function EntryDialog({
       return;
     }
 
-    const entry: Omit<MediaEntry, "id"> = {
+    const entry: MediaEntryWithoutIds = {
       title: title.trim(),
       genre: genre.trim(),
       year: year,

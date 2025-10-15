@@ -2,7 +2,7 @@
 
 import { ArrowDown10, Funnel, Minimize2, Plus, Search } from "lucide-react";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
-import { use, useMemo, useState, useEffect } from "react";
+import { use, useContext, useEffect, useMemo, useState } from "react";
 
 import EntryCard from "@/components/entry-card";
 import { EntryDialog } from "@/components/entry-dialog";
@@ -16,10 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { dummyData } from "@/data/dummy-data";
+import { ListsContext } from "@/contexts/list";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
-import { MediaEntry, MediaList, WatchStatus } from "@/types/media";
-import { updateEntry, addEntry } from "@/lib/media-entry";
+import getEntries from "@/db/entry";
+import { addEntry, updateEntry } from "@/lib/media-entry";
+import { MediaEntry, WatchStatus } from "@/types/media";
+
+type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
 
 const defaultStatus: WatchStatus | "all" = "plan-to-watch";
 const defaultGenre: string = "all";
@@ -44,23 +47,25 @@ export default function ListPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
-  const list: MediaList | undefined = dummyData[slug];
+  const lists = useContext(ListsContext);
+  const list = lists.find((list) => list.slug === slug);
   if (!list) notFound();
+  const entries = use(getEntries({ listId: list.id }));
 
   // Get unique genres and years for filters
   const genres = useMemo(() => {
     const uniqueGenres = Array.from(
-      new Set(list.entries.map((e) => e.genre)),
+      new Set(entries.map((e) => e.genre)),
     ).sort();
     return uniqueGenres;
-  }, [list.entries]);
+  }, [entries]);
 
   const years = useMemo(() => {
-    const uniqueYears = Array.from(new Set(list.entries.map((e) => e.year)))
+    const uniqueYears = Array.from(new Set(entries.map((e) => e.year)))
       .sort((a, b) => b - a)
       .map((year) => year.toString());
     return uniqueYears;
-  }, [list.entries]);
+  }, [entries]);
 
   // Filtering states from url params
   const searchParams = useSearchParams();
@@ -82,7 +87,7 @@ export default function ListPage({
 
   // Create entries from current filter
   const filteredEntries = useMemo(() => {
-    return list.entries.filter((entry) => {
+    return entries.filter((entry) => {
       const matchesSearch = entry.title
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
@@ -95,7 +100,7 @@ export default function ListPage({
 
       return matchesSearch && matchesStatus && matchesGenre && matchesYear;
     });
-  }, [list.entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
+  }, [entries, searchQuery, selectedStatus, selectedGenre, selectedYear]);
 
   const router = useRouter();
 
@@ -148,7 +153,7 @@ export default function ListPage({
     setEditingEntry(entry);
     setShowEntryDialog(true);
   };
-  const handleSaveEntry = (entryData: Omit<MediaEntry, "id">) => {
+  const handleSaveEntry = (entryData: MediaEntryWithoutIds) => {
     if (editingEntry) {
       updateEntry(editingEntry.id, entryData);
     } else {
