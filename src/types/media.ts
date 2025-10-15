@@ -10,7 +10,8 @@ export type WatchStatus =
   | "rewatching";
 
 export interface MediaEntry {
-  id: string;
+  id: number;
+  list_id: number;
   title: string;
   status: WatchStatus;
   genre: string;
