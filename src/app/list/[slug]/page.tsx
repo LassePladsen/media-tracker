@@ -4,6 +4,7 @@ import { ArrowDown10, Funnel, Minimize2, Plus, Search } from "lucide-react";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { use, useContext, useEffect, useMemo, useState } from "react";
 
+import EntriesSpinner from "@/components/entries-spinner";
 import EntryCard from "@/components/entry-card";
 import { EntryDialog } from "@/components/entry-dialog";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,6 @@ import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import getEntries from "@/db/entry";
 import { addEntry, updateEntry } from "@/lib/media-entry";
 import { MediaEntry, WatchStatus } from "@/types/media";
-import { Spinner } from "@/components/ui/spinner";
 
 type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
 
@@ -273,7 +273,7 @@ export default function ListPage({
 
       {/* Entries grid */}
       {isLoading ? (
-        <Spinner />
+        <EntriesSpinner />
       ) : (
         <div className="flex-1 container">
           {filteredEntries.length === 0 ? (
