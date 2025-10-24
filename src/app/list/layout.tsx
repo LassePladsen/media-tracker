@@ -2,20 +2,17 @@
 
 import ListHeader from "@/components/list-header";
 import ScrollToTop from "@/components/scroll-to-top";
-import { ListsContext } from "@/contexts/list";
-import getLists from "@/db/list";
 
-export default async function ListLayout({
+export default function ListLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const lists = await getLists();
   return (
-    <ListsContext value={lists}>
+    <div className="flex flex-col mx-5 md:mx-25 my-8">
       <ListHeader />
       {children}
       <ScrollToTop />
-    </ListsContext>
+    </div>
   );
 }

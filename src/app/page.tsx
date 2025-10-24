@@ -1,12 +1,14 @@
+"use client";
+
 // import { useState } from "react";
 import Link from "next/link";
-import { ComponentProps, PropsWithChildren, use } from "react";
+import { ComponentProps, PropsWithChildren } from "react";
 import { FaSearch } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MediaIcon } from "@/components/ui/media-icon";
-import getLists from "@/db/list";
+import useLists from "@/hooks/use-lists";
 
 function ListButton({
   href,
@@ -26,7 +28,7 @@ function ListButton({
 }
 
 export default function Home() {
-  const lists = use(getLists());
+  const lists = useLists();
   // const [searchQuery, setSearchQuery] = useState("");
 
   // const handleSearch = (e: React.FormEvent) => {
@@ -64,8 +66,8 @@ export default function Home() {
           </form>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {Object.entries(lists).map(([slug, list], index) => (
-              <ListButton href={"/list/" + slug} key={index}>
+            {Object.values(lists).map((list, index) => (
+              <ListButton href={"/list/" + list.slug} key={index}>
                 <MediaIcon type={list.type} />
                 <span>{list.title}</span>
               </ListButton>

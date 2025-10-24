@@ -16,11 +16,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ListsContext } from "@/contexts/list";
+import { ListsContext } from "@/contexts/lists";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import getEntries from "@/db/entry";
 import { addEntry, updateEntry } from "@/lib/media-entry";
 import { MediaEntry, WatchStatus } from "@/types/media";
+import { Spinner } from "@/components/ui/spinner";
 
 type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
 
@@ -50,7 +51,19 @@ export default function ListPage({
   const lists = useContext(ListsContext);
   const list = lists.find((list) => list.slug === slug);
   if (!list) notFound();
-  const entries = use(getEntries({ listId: list.id }));
+  const [entries, setEntries] = useState<MediaEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEntries = async () => {
+      setIsLoading(true);
+      const data = await getEntries({ listId: list.id });
+      setEntries(data);
+      setIsLoading(false);
+    };
+
+    fetchEntries();
+  }, [list]);
 
   // Get unique genres and years for filters
   const genres = useMemo(() => {
@@ -132,15 +145,7 @@ export default function ListPage({
     if (current !== nextStr) {
       router.replace(`?${nextStr}`);
     }
-  }, [
-    searchQuery,
-    selectedStatus,
-    selectedGenre,
-    selectedYear,
-    isSmallCards,
-    router,
-    searchParams,
-  ]);
+  }, [searchQuery, selectedStatus, selectedGenre, selectedYear, isSmallCards]);
 
   // States and functions for entry edit/add
   const [showEntryDialog, setShowEntryDialog] = useState(false); // TODO:
@@ -267,30 +272,34 @@ export default function ListPage({
       </div>
 
       {/* Entries grid */}
-      <div className="flex-1 container">
-        {filteredEntries.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground">
-            <p>No entries found</p>
-          </div>
-        ) : (
-          <div
-            className={
-              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 " +
-              (isSmallCards ? "gap-2" : "gap-4")
-            }
-          >
-            {filteredEntries.map((entry) => (
-              <EntryCard
-                showStatus={selectedStatus === "all"}
-                smallMode={isSmallCards}
-                key={entry.id}
-                entry={entry}
-                onClick={() => openEntryEdit(entry)}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="flex-1 container">
+          {filteredEntries.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <p>No entries found</p>
+            </div>
+          ) : (
+            <div
+              className={
+                "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 " +
+                (isSmallCards ? "gap-2" : "gap-4")
+              }
+            >
+              {filteredEntries.map((entry) => (
+                <EntryCard
+                  showStatus={selectedStatus === "all"}
+                  smallMode={isSmallCards}
+                  key={entry.id}
+                  entry={entry}
+                  onClick={() => openEntryEdit(entry)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <EntryDialog
         openState={showEntryDialog}

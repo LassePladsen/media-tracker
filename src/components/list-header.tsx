@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ComponentProps, PropsWithChildren, useContext } from "react";
 
-import { ListsContext } from "@/contexts/list";
+import { ListsContext } from "@/contexts/lists";
 import { Button } from "./ui/button";
 import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import { MediaIcon } from "./ui/media-icon";

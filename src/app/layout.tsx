@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import Footer from "@/components/footer";
+import { ListsProvider } from "@/contexts/lists";
 import "./globals.css";
+import getLists from "@/db/list";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +32,10 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
-        <div className="min-h-screen flex flex-col font-sans">
-          {children}
-          <Footer />
-        </div>
+        <ListsProvider lists={await getLists()}>
+          <div className="min-h-screen flex flex-col font-sans">{children}</div>
+        </ListsProvider>
+        <Footer />
       </body>
     </html>
   );
