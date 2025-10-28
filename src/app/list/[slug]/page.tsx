@@ -20,7 +20,7 @@ import {
 import { ListsContext } from "@/contexts/lists";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import getEntries from "@/db/entry";
-import { addEntry, updateEntry } from "@/lib/media-entry";
+import { addEntry, updateEntry } from "@/db/entry";
 import { Entry, WatchStatus } from "@/types/schema";
 
 type EntryWithoutIds = Omit<Entry, "id" | "list_id">;

@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 
 import { watchStatusColors, watchStatuses } from "@/data/media";
-import { updateEntry } from "@/lib/media-entry";
+import { updateEntry } from "@/db/entry";
 import { WatchStatus, Entry } from "@/types/schema";
 import { RatingDialog } from "./rating-dialog";
 import { Badge } from "./ui/badge";
