@@ -15,7 +15,12 @@ Mostly inspired by myanimelist, since imdb list and other apps are either not go
 ## UI
 Figma link: https://www.figma.com/make/3KEShIoAfIvGeL5tRS2zWN/Media-Tracker-App?node-id=0-4&t=UECCAUkRw4amd6Tg-1
 
+
+
 ## Features
+Immediate todo:
+- [] Replace "reset rating" button with a "rewind" icon to the right of the stars. Invisible when rating is undefined, but also make sure the star rows are centered instead of the icon, maybe by translating on x axis or something. Removes one button on the entry dialog, and also one on the rating dialog.
+
 Core:
 - [x] Media list OR just a media type system in the db. Default movie/tv/anime. Can support custom lists later.
 - [x] Watch states
