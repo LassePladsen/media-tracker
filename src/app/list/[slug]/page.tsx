@@ -50,14 +50,14 @@ export default function ListPage({
   const list = useListFromSlug(slug);
   if (!list) notFound();
   const [entries, setEntries] = useState<Entry[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEntries = async () => {
-      setIsLoading(true);
+      setLoading(true);
       const data = await getEntries({ listId: list.id });
       setEntries(data);
-      setIsLoading(false);
+      setLoading(false);
     };
 
     fetchEntries();
@@ -152,17 +152,17 @@ export default function ListPage({
     setEditingEntry(null);
     setShowEntryDialog(true);
   };
-  const openEntryEdit = (entry: Entry) => {
+  function openEntryEdit(entry: Entry) {
     setEditingEntry(entry);
     setShowEntryDialog(true);
-  };
-  const handleSaveEntry = (entryData: EntryWithoutId) => {
+  }
+  async function handleSaveEntry(entryData: EntryWithoutId) {
     if (editingEntry) {
-      updateEntry(editingEntry.id, entryData);
+      await updateEntry(editingEntry.id, entryData);
     } else {
-      addEntry(entryData);
+      await addEntry(entryData);
     }
-  };
+  }
 
   const filterIconClasses = "w-4 h-4 text-muted-foreground";
 
@@ -270,7 +270,7 @@ export default function ListPage({
       </div>
 
       {/* Entries grid */}
-      {isLoading ? (
+      {loading ? (
         <EntriesSpinner />
       ) : (
         <div className="flex-1 container">

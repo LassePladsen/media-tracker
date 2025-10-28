@@ -72,7 +72,6 @@ export async function addEntry(entry: EntryWithoutId) {
 }
 
 export async function deleteEntry(id: Entry["id"]) {
-  console.log("LP delete entry id: ", id);
   const response = await sql`DELETE FROM ${sql.unsafe(TABLE)} WHERE id=${id}`;
   return response;
 }

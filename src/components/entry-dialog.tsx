@@ -22,40 +22,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Spinner } from "./ui/spinner";
 
 type EntryWithoutId = Omit<Entry, "id">;
 
 export interface EntryDialogProps {
   openState: boolean;
   setOpenState: (open: boolean) => void;
-  onSave: (entryData: EntryWithoutId) => void;
+  onSave: (entryData: EntryWithoutId) => Promise<void>;
   entry?: Entry | null;
   mediaType: MediaType;
   listId: List["id"];
-}
-
-function DeleteEntryAlert({
-  entry,
-  onConfirm,
-}: {
-  entry: Entry;
-  onConfirm: () => void;
-}) {
-  return (
-    <Button
-      className="float-left"
-      type="button"
-      variant="destructive"
-      onClick={() => {
-        if (!confirm(`Are you sure you want to delete '${entry.title}'?`))
-          return;
-        deleteEntry(entry.id);
-        onConfirm();
-      }}
-    >
-      Delete
-    </Button>
-  );
 }
 
 export function EntryDialog({
@@ -75,6 +52,7 @@ export function EntryDialog({
   const [status, setStatus] =
     useState<Exclude<WatchStatus, "all">>("plan-to-watch");
   const [rating, setRating] = useState<Entry["rating"] | undefined>(undefined);
+  const [loading, setLoading] = useState(false);
 
   const isEditMode = !!entry;
 
@@ -99,7 +77,7 @@ export function EntryDialog({
     }
   }, [openState, entry]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!title || !genre || !year) {
@@ -115,11 +93,34 @@ export function EntryDialog({
       episodes_watched: episodesWatched,
     };
 
-    onSave(entry);
+    setLoading(true);
+    await onSave(entry);
+    setLoading(false);
     setOpenState(false);
-  };
+  }
 
   const mediaTypeLabel = mediaTypeLabels[mediaType];
+
+  function DeleteEntryAlert({ entry }: { entry: Entry }) {
+    return (
+      <Button
+        className="float-left"
+        type="button"
+        variant="destructive"
+        onClick={async () => {
+          if (!confirm(`Are you sure you want to delete '${entry.title}'?`))
+            return;
+          setLoading(true);
+          await deleteEntry(entry.id);
+          setLoading(false);
+          setOpenState(false);
+        }}
+      >
+        Delete
+      </Button>
+    );
+  }
+
   return (
     <Dialog open={openState} onOpenChange={setOpenState}>
       <DialogContent className="sm:max-w-[500px]">
@@ -228,34 +229,32 @@ export function EntryDialog({
 
           {/* Buttons */}
           <DialogFooter className="w-full">
-            {entry?.id && (
-              <DeleteEntryAlert
-                entry={entry}
-                onConfirm={() => setOpenState(false)}
-              />
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                {!!entry && <DeleteEntryAlert entry={entry} />}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setRating(undefined)}
+                >
+                  Reset rating
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setOpenState(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit">
+                  {isEditMode
+                    ? "Save Changes"
+                    : `Add ${mediaTypeLabel.singular.toLowerCase()}`}
+                </Button>
+              </>
             )}
-
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setRating(undefined)}
-            >
-              Reset rating
-            </Button>
-
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpenState(false)}
-            >
-              Cancel
-            </Button>
-
-            <Button type="submit">
-              {isEditMode
-                ? "Save Changes"
-                : `Add ${mediaTypeLabel.singular.toLowerCase()}`}
-            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
