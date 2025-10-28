@@ -17,14 +17,14 @@ Figma link: https://www.figma.com/make/3KEShIoAfIvGeL5tRS2zWN/Media-Tracker-App?
 
 ## Features
 Core:
-- [] Media list OR just a media type system in the db. Default movie/tv/anime. Can support custom lists later.
-- [] Watch states
-    - [] Plan to watch (watchlist)
-    - [] Watching
-    - [] On-hold/waiting
-    - [] Dropped 
-    - [] Completed
-    - [] Easy one-click toggle between plan to watch / have watched from preview and in detailed view
+- [x] Media list OR just a media type system in the db. Default movie/tv/anime. Can support custom lists later.
+- [x] Watch states
+    - [x] Plan to watch (watchlist)
+    - [x] Watching
+    - [x] On-hold/waiting
+    - [x] Dropped 
+    - [x] Completed
+    - [x] Easy one-click toggle between plan to watch / have watched from preview and in detailed view
     - [] Upon adding to list, default to plan to watch with 0 episodes watched
 - [] Watch list (entries in plan to watch)
     - [] Separate for each list / media type

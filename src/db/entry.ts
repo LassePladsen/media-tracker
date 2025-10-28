@@ -9,7 +9,7 @@ if (!db_url) throw new Error("Missing env variable DATABASE_URL");
 const sql = neon(db_url);
 
 export default async function getEntries(args?: {
-  listId?: Entry["listId"];
+  listId?: Entry["list_id"];
   limit?: number;
 }) {
   let whereClause = sql``;

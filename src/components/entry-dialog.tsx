@@ -43,7 +43,7 @@ export function EntryDialog({
   const [genre, setGenre] = useState<Entry["genre"] | undefined>(undefined);
   const [year, setYear] = useState<Entry["year"] | undefined>(undefined);
   const [episodesWatched, setEpisodesWatched] = useState<
-    Entry["episodesWatched"] | undefined
+    Entry["episodes_watched"] | undefined
   >(undefined);
   const [status, setStatus] =
     useState<Exclude<WatchStatus, "all">>("plan-to-watch");
@@ -58,7 +58,7 @@ export function EntryDialog({
         setTitle(entry.title);
         setGenre(entry.genre);
         setYear(entry.year);
-        setEpisodesWatched(entry.episodesWatched);
+        setEpisodesWatched(entry.episodes_watched);
         setStatus(entry.status);
         setRating(entry.rating);
       } else {
@@ -85,7 +85,7 @@ export function EntryDialog({
       year: year,
       status,
       rating: rating,
-      episodesWatched: episodesWatched,
+      episodes_watched: episodesWatched,
     };
 
     onSave(entry);

@@ -13,15 +13,15 @@ export type WatchStatus =
  */
 export interface Entry {
   id: number;
-  listId?: number;
+  list_id?: number;
   title: string;
   status: WatchStatus;
   genre: string;
   year: number;
   rating?: number;
-  episodesWatched?: number;
-  dateStarted?: string;
-  dateEnded?: string;
+  episodes_watched?: number;
+  date_started?: string;
+  date_ended?: string;
 }
 
 /**

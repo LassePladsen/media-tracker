@@ -11,7 +11,7 @@
     "lint": "eslint src",
     "fix": "eslint src --fix",
     "prepare": "husky",
-    "schema": "pg-schema-gen --sql-file src/db/schema.sql --ts-out src/types/schema.ts && sed --in-place -E 's/([a-z])_([a-z])/\\1\\U\\2/g; s/([a-z])_([a-z])/\\1\\U\\2/g' src/types/schema.ts && prettier src/types/schema.ts --write"
+    "schema": "pg-schema-gen --sql-file src/db/schema.sql --ts-out src/types/schema.ts && prettier src/types/schema.ts --write"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
