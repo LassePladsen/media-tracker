@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
-import { Entry, MediaType, WatchStatus } from "@/types/schema";
+import { Entry, List, MediaType, WatchStatus } from "@/types/schema";
+import RatingStarRow from "./rating-star-row";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -20,16 +21,58 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import RatingStarRow from "./rating-star-row";
+import { deleteEntry } from "@/db/entry";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@radix-ui/react-alert-dialog";
+import { AlertDialogFooter, AlertDialogHeader } from "./ui/alert-dialog";
 
-type EntryWithoutIds = Omit<Entry, "id" | "list_id">;
+type EntryWithoutId = Omit<Entry, "id">;
 
 export interface EntryDialogProps {
   openState: boolean;
   setOpenState: (open: boolean) => void;
-  onSave: (entryData: EntryWithoutIds) => void;
+  onSave: (entryData: EntryWithoutId) => void;
   entry?: Entry | null;
   mediaType: MediaType;
+  listId: List["id"];
+}
+
+function DeleteEntryAlert({ entry }: { entry: Entry }) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          className="float-left"
+          type="button"
+          variant="destructive"
+          onClick={() => deleteEntry(entry.id)}
+        >
+          Delete
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Are you sure you want to delete {entry.title}?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone, the entry will be permanently deleted.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
 }
 
 export function EntryDialog({
@@ -38,6 +81,7 @@ export function EntryDialog({
   onSave,
   entry,
   mediaType,
+  listId,
 }: EntryDialogProps) {
   const [title, setTitle] = useState<Entry["title"] | undefined>(undefined);
   const [genre, setGenre] = useState<Entry["genre"] | undefined>(undefined);
@@ -78,8 +122,8 @@ export function EntryDialog({
     if (!title || !genre || !year) {
       return;
     }
-
-    const entry: EntryWithoutIds = {
+    const entry: EntryWithoutId = {
+      list_id: listId,
       title: title.trim(),
       genre: genre.trim(),
       year: year,
@@ -200,8 +244,9 @@ export function EntryDialog({
           </div>
 
           {/* Buttons */}
-          <DialogFooter>
-            {/* Rating stars */}
+          <DialogFooter className="w-full">
+            {entry?.id && <DeleteEntryAlert entry={entry} />}
+
             <Button
               type="button"
               variant="ghost"
@@ -209,6 +254,7 @@ export function EntryDialog({
             >
               Reset rating
             </Button>
+
             <Button
               type="button"
               variant="outline"
@@ -216,6 +262,7 @@ export function EntryDialog({
             >
               Cancel
             </Button>
+
             <Button type="submit">
               {isEditMode
                 ? "Save Changes"
