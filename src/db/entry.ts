@@ -4,7 +4,7 @@ import { neon } from "@neondatabase/serverless";
 
 import { type Entry } from "@/types/schema";
 
-type EntryWithoutIds = Omit<Entry, "id" | "list_id">;
+type EntryWithoutId = Omit<Entry, "id">;
 
 const TABLE = "entry";
 
@@ -30,8 +30,8 @@ export async function getEntry(id: Entry["id"]) {
   return response[0] as Entry | undefined;
 }
 
-export async function updateEntry(id: Entry["id"], entryData: EntryWithoutIds) {
-  return await sql`
+export async function updateEntry(id: Entry["id"], entryData: EntryWithoutId) {
+  const response = await sql`
     UPDATE ${sql.unsafe(TABLE)} SET
       title=${entryData.title},
       status=${entryData.status},
@@ -42,12 +42,12 @@ export async function updateEntry(id: Entry["id"], entryData: EntryWithoutIds) {
       date_started=${entryData.date_started},
       date_ended=${entryData.date_ended}
     WHERE id=${id}`;
+  return response;
 }
 
-export async function addEntry(entry: EntryWithoutIds) {
-  return await sql`
+export async function addEntry(entry: EntryWithoutId) {
+  const response = await sql`
     INSERT INTO ${sql.unsafe(TABLE)} (
-      id,
       list_id,
       title,
       status,
@@ -57,6 +57,7 @@ export async function addEntry(entry: EntryWithoutIds) {
       episodes_watched,date_started,
       date_ended
       ) VALUES (
+        ${entry.list_id},
         ${entry.title},
         ${entry.status},
         ${entry.genre},
@@ -67,4 +68,11 @@ export async function addEntry(entry: EntryWithoutIds) {
         ${entry.date_ended}
       )
     `;
+  return response;
+}
+
+export async function deleteEntry(id: Entry["id"]) {
+  console.log("LP delete entry id: ", id);
+  const response = await sql`DELETE FROM ${sql.unsafe(TABLE)} WHERE id=${id}`;
+  return response;
 }

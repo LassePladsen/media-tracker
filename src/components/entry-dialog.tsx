@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
+import { deleteEntry } from "@/db/entry";
 import { Entry, List, MediaType, WatchStatus } from "@/types/schema";
 import RatingStarRow from "./rating-star-row";
 import { Button } from "./ui/button";
@@ -21,17 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { deleteEntry } from "@/db/entry";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@radix-ui/react-alert-dialog";
-import { AlertDialogFooter, AlertDialogHeader } from "./ui/alert-dialog";
 
 type EntryWithoutId = Omit<Entry, "id">;
 
@@ -44,34 +34,27 @@ export interface EntryDialogProps {
   listId: List["id"];
 }
 
-function DeleteEntryAlert({ entry }: { entry: Entry }) {
+function DeleteEntryAlert({
+  entry,
+  onConfirm,
+}: {
+  entry: Entry;
+  onConfirm: () => void;
+}) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          className="float-left"
-          type="button"
-          variant="destructive"
-          onClick={() => deleteEntry(entry.id)}
-        >
-          Delete
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you sure you want to delete {entry.title}?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone, the entry will be permanently deleted.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Button
+      className="float-left"
+      type="button"
+      variant="destructive"
+      onClick={() => {
+        if (!confirm(`Are you sure you want to delete '${entry.title}'?`))
+          return;
+        deleteEntry(entry.id);
+        onConfirm();
+      }}
+    >
+      Delete
+    </Button>
   );
 }
 
@@ -245,7 +228,12 @@ export function EntryDialog({
 
           {/* Buttons */}
           <DialogFooter className="w-full">
-            {entry?.id && <DeleteEntryAlert entry={entry} />}
+            {entry?.id && (
+              <DeleteEntryAlert
+                entry={entry}
+                onConfirm={() => setOpenState(false)}
+              />
+            )}
 
             <Button
               type="button"

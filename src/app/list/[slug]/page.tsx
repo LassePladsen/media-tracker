@@ -2,7 +2,7 @@
 
 import { ArrowDown10, Funnel, Minimize2, Plus, Search } from "lucide-react";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
-import { use, useContext, useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 
 import EntriesSpinner from "@/components/entries-spinner";
 import EntryCard from "@/components/entry-card";
@@ -17,13 +17,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ListsContext } from "@/contexts/lists";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
-import getEntries from "@/db/entry";
-import { addEntry, updateEntry } from "@/db/entry";
+import getEntries, { addEntry, updateEntry } from "@/db/entry";
+import { useListFromSlug } from "@/hooks/use-lists";
 import { Entry, WatchStatus } from "@/types/schema";
 
-type EntryWithoutIds = Omit<Entry, "id" | "list_id">;
+type EntryWithoutId = Omit<Entry, "id">;
 
 const defaultStatus: WatchStatus | "all" = "plan-to-watch";
 const defaultGenre: string = "all";
@@ -48,8 +47,7 @@ export default function ListPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
-  const lists = useContext(ListsContext);
-  const list = lists.find((list) => list.slug === slug);
+  const list = useListFromSlug(slug);
   if (!list) notFound();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -158,7 +156,7 @@ export default function ListPage({
     setEditingEntry(entry);
     setShowEntryDialog(true);
   };
-  const handleSaveEntry = (entryData: EntryWithoutIds) => {
+  const handleSaveEntry = (entryData: EntryWithoutId) => {
     if (editingEntry) {
       updateEntry(editingEntry.id, entryData);
     } else {
@@ -306,6 +304,7 @@ export default function ListPage({
         setOpenState={setShowEntryDialog}
         onSave={handleSaveEntry}
         entry={editingEntry}
+        listId={list.id}
         mediaType={list.type}
       />
     </div>
