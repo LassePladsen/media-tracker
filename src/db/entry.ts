@@ -2,14 +2,14 @@
 
 import { neon } from "@neondatabase/serverless";
 
-import { MediaEntry } from "@/types/media";
+import { Entry } from "@/types/schema";
 
 const db_url = process.env.DATABASE_URL;
 if (!db_url) throw new Error("Missing env variable DATABASE_URL");
 const sql = neon(db_url);
 
 export default async function getEntries(args?: {
-  listId?: MediaEntry["list_id"];
+  listId?: Entry["listId"];
   limit?: number;
 }) {
   let whereClause = sql``;
@@ -17,10 +17,10 @@ export default async function getEntries(args?: {
   let limitClause = sql``;
   if (args?.limit) limitClause = sql`LIMIT ${args.limit}`;
   const response = await sql`SELECT * FROM entry ${whereClause} ${limitClause}`;
-  return response as MediaEntry[];
+  return response as Entry[];
 }
 
-export async function getEntry(id: MediaEntry["id"]) {
+export async function getEntry(id: Entry["id"]) {
   const response = await sql`SELECT * from entry WHERE id=${id}`;
-  return response[0] as MediaEntry | undefined;
+  return response[0] as Entry | undefined;
 }

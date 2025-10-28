@@ -1,4 +1,4 @@
-import { WatchStatus, MediaType } from "@/types/media";
+import { WatchStatus, MediaType } from "@/types/schema";
 
 /** Record mapping watch status slugs to corresponding labels. LP 2025-05-10 */
 export const watchStatuses: Record<WatchStatus | "all", string> = {

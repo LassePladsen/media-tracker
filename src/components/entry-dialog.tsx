@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
-import { MediaEntry, MediaType, WatchStatus } from "../types/media";
+import { Entry, MediaType, WatchStatus } from "@/types/schema";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -22,13 +22,13 @@ import {
 } from "./ui/select";
 import RatingStarRow from "./rating-star-row";
 
-type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
+type EntryWithoutIds = Omit<Entry, "id" | "list_id">;
 
 export interface EntryDialogProps {
   openState: boolean;
   setOpenState: (open: boolean) => void;
-  onSave: (entryData: MediaEntryWithoutIds) => void;
-  entry?: MediaEntry | null;
+  onSave: (entryData: EntryWithoutIds) => void;
+  entry?: Entry | null;
   mediaType: MediaType;
 }
 
@@ -39,21 +39,15 @@ export function EntryDialog({
   entry,
   mediaType,
 }: EntryDialogProps) {
-  const [title, setTitle] = useState<MediaEntry["title"] | undefined>(
-    undefined,
-  );
-  const [genre, setGenre] = useState<MediaEntry["genre"] | undefined>(
-    undefined,
-  );
-  const [year, setYear] = useState<MediaEntry["year"] | undefined>(undefined);
+  const [title, setTitle] = useState<Entry["title"] | undefined>(undefined);
+  const [genre, setGenre] = useState<Entry["genre"] | undefined>(undefined);
+  const [year, setYear] = useState<Entry["year"] | undefined>(undefined);
   const [episodesWatched, setEpisodesWatched] = useState<
-    MediaEntry["episodesWatched"] | undefined
+    Entry["episodesWatched"] | undefined
   >(undefined);
   const [status, setStatus] =
     useState<Exclude<WatchStatus, "all">>("plan-to-watch");
-  const [rating, setRating] = useState<MediaEntry["rating"] | undefined>(
-    undefined,
-  );
+  const [rating, setRating] = useState<Entry["rating"] | undefined>(undefined);
 
   const isEditMode = !!entry;
 
@@ -85,7 +79,7 @@ export function EntryDialog({
       return;
     }
 
-    const entry: MediaEntryWithoutIds = {
+    const entry: EntryWithoutIds = {
       title: title.trim(),
       genre: genre.trim(),
       year: year,

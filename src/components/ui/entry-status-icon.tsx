@@ -1,7 +1,7 @@
 import { IterationCw, Play, SquareCheckBig } from "lucide-react";
 
 import { watchStatusColors } from "@/data/media";
-import { WatchStatus } from "@/types/media";
+import { WatchStatus } from "@/types/schema";
 
 export interface EntryStatusIconProps {
   status: WatchStatus;

@@ -2,15 +2,15 @@
 
 import { createContext, PropsWithChildren } from "react";
 
-import { type MediaList } from "@/types/media";
+import { type List } from "@/types/schema";
 
-export const ListsContext = createContext<MediaList[]>([]);
+export const ListsContext = createContext<List[]>([]);
 
 export function ListsProvider({
   children,
   lists,
 }: PropsWithChildren<{
-  lists: MediaList[];
+  lists: List[];
 }>) {
   return <ListsContext value={lists}>{children}</ListsContext>;
 }

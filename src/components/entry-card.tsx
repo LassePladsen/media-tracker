@@ -4,8 +4,7 @@ import { useCallback, useState } from "react";
 
 import { watchStatusColors, watchStatuses } from "@/data/media";
 import { updateEntry } from "@/lib/media-entry";
-import { WatchStatus } from "@/types/media";
-import { MediaEntry } from "../types/media";
+import { WatchStatus, Entry } from "@/types/schema";
 import { RatingDialog } from "./rating-dialog";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
@@ -13,7 +12,7 @@ import EntryStatusIcon from "./ui/entry-status-icon";
 import RatingStar from "./ui/rating-star";
 
 export interface EntryCardProps {
-  entry: MediaEntry;
+  entry: Entry;
   onClick?: () => void;
   smallMode?: boolean;
   showStatus?: boolean;
@@ -28,7 +27,7 @@ export default function Entrycard({
   const [showRatingDialog, setShowRatingDialog] = useState(false);
 
   const handleSaveRating = useCallback(
-    (entryData: Omit<MediaEntry, "id">) => updateEntry(entry.id, entryData),
+    (entryData: Omit<Entry, "id">) => updateEntry(entry.id, entryData),
     [entry],
   );
 

@@ -21,9 +21,9 @@ import { ListsContext } from "@/contexts/lists";
 import { mediaTypeLabels, watchStatuses } from "@/data/media";
 import getEntries from "@/db/entry";
 import { addEntry, updateEntry } from "@/lib/media-entry";
-import { MediaEntry, WatchStatus } from "@/types/media";
+import { Entry, WatchStatus } from "@/types/schema";
 
-type MediaEntryWithoutIds = Omit<MediaEntry, "id" | "list_id">;
+type EntryWithoutIds = Omit<Entry, "id" | "list_id">;
 
 const defaultStatus: WatchStatus | "all" = "plan-to-watch";
 const defaultGenre: string = "all";
@@ -51,7 +51,7 @@ export default function ListPage({
   const lists = useContext(ListsContext);
   const list = lists.find((list) => list.slug === slug);
   if (!list) notFound();
-  const [entries, setEntries] = useState<MediaEntry[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -149,16 +149,16 @@ export default function ListPage({
 
   // States and functions for entry edit/add
   const [showEntryDialog, setShowEntryDialog] = useState(false); // TODO:
-  const [editingEntry, setEditingEntry] = useState<MediaEntry | null>(null); // TODO:
+  const [editingEntry, setEditingEntry] = useState<Entry | null>(null); // TODO:
   const handleOpenAddDialog = () => {
     setEditingEntry(null);
     setShowEntryDialog(true);
   };
-  const openEntryEdit = (entry: MediaEntry) => {
+  const openEntryEdit = (entry: Entry) => {
     setEditingEntry(entry);
     setShowEntryDialog(true);
   };
-  const handleSaveEntry = (entryData: MediaEntryWithoutIds) => {
+  const handleSaveEntry = (entryData: EntryWithoutIds) => {
     if (editingEntry) {
       updateEntry(editingEntry.id, entryData);
     } else {

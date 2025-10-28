@@ -1,4 +1,4 @@
-import { MediaType } from "@/types/media";
+import { MediaType } from "@/types/schema";
 import { Clapperboard, Tv } from "lucide-react";
 import { IconBaseProps } from "react-icons";
 import { SiMyanimelist } from "react-icons/si";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { MediaEntry } from "../types/media";
+import { Entry } from "@/types/schema";
 import RatingStarRow from "./rating-star-row";
 import { Button } from "./ui/button";
 import {
@@ -14,8 +14,8 @@ import {
 export interface RatingDialogProps {
   openState: boolean;
   setOpenState: (open: boolean) => void;
-  onSave: (entryData: Omit<MediaEntry, "id">) => void;
-  entry: MediaEntry;
+  onSave: (entryData: Omit<Entry, "id">) => void;
+  entry: Entry;
 }
 
 export function RatingDialog({
@@ -25,7 +25,7 @@ export function RatingDialog({
   entry,
 }: RatingDialogProps) {
   const [selectedRating, setSelectedRating] = useState<
-    MediaEntry["rating"] | undefined
+    Entry["rating"] | undefined
   >(undefined);
 
   const rating = entry.rating;
