@@ -2,6 +2,7 @@
 App that lets you track and rate what you watch, plan to watch, dropped, etc. Built with React in Next.js, hosted on Vercel as a playground with no user login (app contains nothing sensitive). Uses Neondb for postgres database.
 
 This was simply a fun side project to test out Next.js, and is very unfinished. The main concept is up and running.
+Take a look at [./todo-plan.md] if you're curious.
 
 ## Getting Started
 
