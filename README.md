@@ -29,4 +29,4 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Database
-You will need to connect to a database, see the [environment variables](./.env.local), or setup dummy data.
+You will need to connect to a database, see the [environment variables](./.env.example), or setup dummy data.
