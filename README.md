@@ -1,4 +1,4 @@
-# Intro
+# Media Tracker
 App that lets you track and rate what you watch, plan to watch, dropped, etc. Built with React in Next.js, hosted on Vercel as a playground with no user login (app contains nothing sensitive). Uses Neondb as a postgres database.
 
 This was simply a fun side project to test out Next.js, so there is a lot of functionality that will not be finished.
