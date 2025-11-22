@@ -12,16 +12,15 @@ The project is hosted on Vercel at https://media-tracker-green.vercel.app/.
 
 You will need to connect to a database, see the [environment variables](./.env.example), or setup dummy data.
 
-To run the development server:
+Install dependencies:
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
